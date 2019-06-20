@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/info")
+@RequestMapping("/controlInfo")
 public class ControlInfoAction extends BaseAction {
 
     @Autowired
