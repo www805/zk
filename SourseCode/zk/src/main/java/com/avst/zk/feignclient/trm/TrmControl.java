@@ -2,6 +2,7 @@ package com.avst.zk.feignclient.trm;
 
 import com.avst.zk.common.util.baseaction.RResult;
 import com.avst.zk.common.util.baseaction.ReqParam;
+import com.avst.zk.common.vo.ToOutVO;
 import com.avst.zk.feignclient.base.ClientResult;
 import com.avst.zk.common.vo.ControlInfoParamVO;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -15,6 +16,6 @@ public interface TrmControl {
 
     @RequestMapping("/trm/v1/checkClient")
     @ResponseBody
-    public RResult checkClient(@RequestBody ReqParam param);
+    public RResult<ToOutVO> checkClient(@RequestBody ReqParam param);
 
 }

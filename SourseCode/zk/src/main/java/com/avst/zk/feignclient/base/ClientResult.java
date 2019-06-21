@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class ClientResult extends BaseAction implements EquipmentControl, MeetingControl, TrmControl {
 
     @Override
-    public RResult checkClient(ReqParam param) {
+    public RResult<ToOutVO> checkClient(ReqParam param) {
         RResult rresult=createNewResultOfFail();
         ToOutVO toOutVO=new ToOutVO();
         toOutVO.setTotal_item(0);

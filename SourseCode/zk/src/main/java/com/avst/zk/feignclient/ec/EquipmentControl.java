@@ -4,6 +4,7 @@ package com.avst.zk.feignclient.ec;
 import com.avst.zk.common.util.baseaction.RResult;
 import com.avst.zk.common.util.baseaction.ReqParam;
 import com.avst.zk.common.vo.ControlInfoParamVO;
+import com.avst.zk.common.vo.ToOutVO;
 import com.avst.zk.feignclient.base.ClientResult;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +17,6 @@ public interface EquipmentControl {
 
     @RequestMapping("/ec/v1/checkClient")
     @ResponseBody
-    public RResult checkClient(@RequestBody ReqParam param);
+    public RResult<ToOutVO> checkClient(@RequestBody ReqParam param);
 
 }

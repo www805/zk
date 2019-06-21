@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -51,23 +52,22 @@ public class heartbeatAction {
 
 
         ReqParam<ToOutVO> reqParam = new ReqParam();
+        reqParam.setParam(new ToOutVO());
 
         //请求会议是否正常
-        RResult eqResult = equipmentControl.checkClient(reqParam);
+        RResult<ToOutVO> eqResult = equipmentControl.checkClient(reqParam);
         ToOutVO to = (ToOutVO) eqResult.getData();
         eqInfoVO = getStatus(eqInfoVO, to,"eq");
 
-        ReqParam<ToOutVO> reqParam2 = new ReqParam();
         //请求设备是否正常
-        RResult mcResult = meetingControl.checkClient(reqParam2);
-        to = (ToOutVO) mcResult.getData();
-        meInfoVO = getStatus(meInfoVO, to,"mc");
+        RResult mcResult = meetingControl.checkClient(reqParam);
+        ToOutVO to2 = (ToOutVO) mcResult.getData();
+        meInfoVO = getStatus(meInfoVO, to2,"mc");
 
-        ReqParam<ToOutVO> reqParam3 = new ReqParam();
         //请求业务是否正常
-        RResult trmResult = trmControl.checkClient(reqParam3);
-        to = (ToOutVO) trmResult.getData();
-        trmInfoVO = getStatus(trmInfoVO, to,"eq");
+        RResult trmResult = trmControl.checkClient(reqParam);
+        ToOutVO to3 = (ToOutVO) trmResult.getData();
+        trmInfoVO = getStatus(trmInfoVO, to3,"trm");
 
         //把已经注册服务信息的放到集合中
 //        List<ControlInfoParamVO> list = new ArrayList<>();
