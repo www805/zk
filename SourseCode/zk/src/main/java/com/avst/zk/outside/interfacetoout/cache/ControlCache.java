@@ -1,7 +1,8 @@
 package com.avst.zk.outside.interfacetoout.cache;
 
 
-import com.avst.zk.common.param.ControlInfoParam;
+
+import com.avst.zk.common.vo.ControlInfoParamVO;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,9 +14,9 @@ import java.util.Map;
  */
 public class ControlCache {
 
-    private static Map<String, List<ControlInfoParam>> fdMap;
+    private static Map<String, List<ControlInfoParamVO>> fdMap;
 
-    public static synchronized  List<ControlInfoParam> getControlInfoList(String ciid){
+    public static synchronized  List<ControlInfoParamVO> getControlInfoList(String ciid){
         if(null!=fdMap&&fdMap.containsKey(ciid)){
             return fdMap.get(ciid);
         }
@@ -23,21 +24,21 @@ public class ControlCache {
     }
 
 
-    public static synchronized ControlInfoParam getControlInfoByFDIp(String ciid, String ip){
-        List<ControlInfoParam> list=getControlInfoList(ciid);
+    public static synchronized ControlInfoParamVO getControlInfoByFDIp(String ciid, String ip){
+        List<ControlInfoParamVO> list=getControlInfoList(ciid);
         if(null!=list&&list.size() > 0){
-            for(ControlInfoParam ci:list){
-                if(ip.equals(ci.getIp())){
-                    return ci;
-                }
+            for(ControlInfoParamVO ci:list){
+//                if(ip.equals(ci.getIp())){
+//                    return ci;
+//                }
             }
         }
         return null;
     }
-    public static synchronized  boolean setControlInfoList(String ciid,List<ControlInfoParam> cilist){
+    public static synchronized  boolean setControlInfoList(String ciid,List<ControlInfoParamVO> cilist){
 
         if(null==fdMap){
-            fdMap=new HashMap<String, List<ControlInfoParam>>();
+            fdMap=new HashMap<String, List<ControlInfoParamVO>>();
         }
         if(fdMap.containsKey(ciid)){
             fdMap.remove(ciid);
@@ -46,21 +47,23 @@ public class ControlCache {
         return true;
     }
 
-    public static synchronized  boolean setControlInfo(String ciid, ControlInfoParam ciparam){
-        List<ControlInfoParam> list=getControlInfoList(ciid);
+    public static synchronized  boolean setControlInfo(String ciid, ControlInfoParamVO ciparam){
+        List<ControlInfoParamVO> list=getControlInfoList(ciid);
         if(null!=list){
             if(list.size() > 0){
                 int i=0;
-                for(ControlInfoParam ci:list){
-                    if(ciparam.getIp().equals(ci.getIp())){
-                        list.remove(i);
-                        break;
-                    }
+                for(ControlInfoParamVO ci:list){
+
+//                    if(ciparam.getIp().equals(ci.getIp())){
+//                        list.remove(i);
+//                        break;
+//                    }
                     i++;
+
                 }
             }
         }else{
-            list=new ArrayList<ControlInfoParam>();
+            list=new ArrayList<ControlInfoParamVO>();
         }
         list.add(ciparam);
         setControlInfoList(ciid,list);
