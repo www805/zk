@@ -30,4 +30,5 @@ public class ControlInfoAction extends BaseAction {
         return result;
     }
 
+
 }
