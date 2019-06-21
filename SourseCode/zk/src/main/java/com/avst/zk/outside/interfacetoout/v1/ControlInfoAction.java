@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/controlInfo")
+@RequestMapping("/zk")
 public class ControlInfoAction extends BaseAction {
 
     @Autowired
@@ -21,14 +21,12 @@ public class ControlInfoAction extends BaseAction {
      * 提供给外部，服务器信息列表接口
      * @return
      */
-    @RequestMapping("/getControlInfo")
-    @ResponseBody
-    public RResult getControlInfo(){
+    @RequestMapping("/getControlInfoAll")
+    public RResult getControlInfoAll(){
         RResult result=this.createNewResultOfFail();
         controlInfoService.getControlInfo(result);
         result.setEndtime(DateUtil.getDateAndMinute());
         return result;
     }
-
 
 }
