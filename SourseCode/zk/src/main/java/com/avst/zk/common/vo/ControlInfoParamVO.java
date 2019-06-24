@@ -7,7 +7,7 @@ import java.util.Date;
 public class ControlInfoParamVO {
 
     //服务名称
-    private String ServerName;
+    private String servername;
 
     private Integer total_item;//总业务数
 
@@ -19,12 +19,12 @@ public class ControlInfoParamVO {
     //创建时间
     private String createtime;
 
-    public String getServerName() {
-        return ServerName;
+    public String getServername() {
+        return servername;
     }
 
-    public void setServerName(String serverName) {
-        ServerName = serverName;
+    public void setServername(String servername) {
+        this.servername = servername;
     }
 
     public Integer getTotal_item() {
@@ -62,7 +62,7 @@ public class ControlInfoParamVO {
     @Override
     public String toString() {
         return "ControlInfoParamVO{" +
-                "ServerName='" + ServerName + '\'' +
+                "servername='" + servername + '\'' +
                 ", total_item=" + total_item +
                 ", use_item=" + use_item +
                 ", status=" + status +
