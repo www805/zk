@@ -77,7 +77,6 @@ public class heartbeatAction {
         list.add(meInfoVO);
         list.add(trmInfoVO);
 
-        System.out.println(list);
 
         //放到缓存里
         ControlCache.setControlInfoList("list", list);
