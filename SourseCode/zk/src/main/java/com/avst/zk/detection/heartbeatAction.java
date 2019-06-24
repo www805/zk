@@ -90,7 +90,6 @@ public class heartbeatAction {
 
         if (null == controlInfoVO) {
             controlInfoVO = new ControlInfoParamVO();
-            controlInfoVO.setCreatetime(DateUtil.getDateAndMinute());//设置当前时间
             controlInfoVO.setStatus(StatusCode.ERROR);
         }
 
@@ -103,6 +102,9 @@ public class heartbeatAction {
             //如果是中途断开的就返回OFF
             controlInfoVO.setStatus(StatusCode.ERROR);
         } else {
+            if (controlInfoVO.getStatus() == StatusCode.ERROR) {
+                controlInfoVO.setCreatetime(DateUtil.getDateAndMinute());//设置当前时间
+            }
             //正常连接OK
             controlInfoVO.setStatus(StatusCode.OK);
         }

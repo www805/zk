@@ -29,4 +29,16 @@ public class ControlInfoAction extends BaseAction {
         return result;
     }
 
+    /**
+     * 向外提供服务器时间
+     * @return
+     */
+    @RequestMapping("/getControlTime")
+    public RResult getControlTime(){
+        RResult result=this.createNewResultOfFail();
+        controlInfoService.getControlTime(result);
+        result.setEndtime(DateUtil.getDateAndMinute());
+        return result;
+    }
+
 }
