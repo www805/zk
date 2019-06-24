@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @FeignClient(value = "ec", url = "localhost:8081/", fallback = ClientResult.class)
 public interface EquipmentControl {
 
-    @RequestMapping("/ec/v1/checkClient")
+    @RequestMapping("/et/v1/checkClient")
     @ResponseBody
     public RResult<ToOutVO> checkClient(@RequestBody ReqParam param);
 

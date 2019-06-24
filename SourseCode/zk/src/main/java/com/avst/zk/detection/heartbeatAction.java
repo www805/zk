@@ -77,7 +77,6 @@ public class heartbeatAction {
         list.add(meInfoVO);
         list.add(trmInfoVO);
 
-        System.out.println(list);
 
         //放到缓存里
         ControlCache.setControlInfoList("list", list);
@@ -95,7 +94,7 @@ public class heartbeatAction {
 
         controlInfoVO.setTotal_item(to.getTotal_item());//总业务数
         controlInfoVO.setUse_item(to.getUse_item());//可使用业务数
-        controlInfoVO.setServerName(serverName);//服务器名称
+        controlInfoVO.setServername(serverName);//服务器名称
 
         //如果名字不为空，状态是0说明是中途断线了
         if (to.getTotal_item() == 0 && to.getUse_item() == 0) {
