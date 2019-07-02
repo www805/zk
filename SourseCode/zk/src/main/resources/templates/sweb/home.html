@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <style>
+        .piece{
+            background-color: #F2F2F2;width: 48%;float: left;margin-top: 10px;text-align: right;
+        }
+        .piece_left{
+            margin-right: 10px;
+        }
+        .piece_bottoma{
+            margin-top: 10px;
+        }
+        .piece p{
+            margin: 12px;
+        }
+        .p_num{
+            margin: 12px;color: #1e9fff;
+        }
+        .piece:hover {
+            background-color: #e2e2e2;
+        }
+    </style>
+</head>
+
+<body >
+
+
+<div style="padding: 20px; background-color: #F2F2F2;">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md4">
+            <div class="layui-card">
+                <div class="layui-card-header"><h3>笔录数据</h3></div>
+                <div class="layui-card-body " style="overflow:hidden;">
+                    <div class="piece piece_left" >
+                        <a >
+                            <p>模板</p>
+                            <h1 class="p_num" >36</h1>
+                        </a>
+                    </div>
+
+                    <div  class="piece">
+                        <a >
+                            <p>提讯总数</p>
+                            <h1 class="p_num" >578</h1>
+                        </a>
+                    </div>
+
+                    <div class="piece piece_left piece_bottom">
+                        <a >
+                            <p>题目</p>
+                            <h1 class="p_num" >1280</h1>
+                        </a>
+                    </div>
+
+                    <div  class="piece piece_bottom">
+                        <a >
+                            <p>答案</p>
+                            <h1 class="p_num" >8888</h1>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <div class="layui-card">
+                <div class="layui-card-header"><h3>案件数据</h3></div>
+                <div class="layui-card-body" style="overflow:hidden;">
+                    <div class="piece piece_left">
+                        <a >
+                            <p>笔录类型</p>
+                            <h1 class="p_num" >17</h1>
+                        </a>
+                    </div>
+
+                    <div  class="piece">
+                        <a >
+                            <p>案件数量</p>
+                            <h1 class="p_num" >22</h1>
+                        </a>
+                    </div>
+
+                    <div class="piece piece_left piece_bottom">
+                        <a >
+                            <p>关键字</p>
+                            <h1 class="p_num" >368</h1>
+                        </a>
+                    </div>
+
+                    <div  class="piece">
+                        <a >
+                            <p>笔录文件</p>
+                            <h1 class="p_num" >6</h1>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-col-md4">
+            <div class="layui-card">
+                <div class="layui-card-header"><h3>用户数据</h3></div>
+                <div class="layui-card-body" style="overflow:hidden;">
+                    <div class="piece piece_left">
+                        <a >
+                            <p>系统用户</p>
+                            <h1 class="p_num" >2</h1>
+                        </a>
+                    </div>
+
+                    <div  class="piece">
+                        <a >
+                            <p>角色</p>
+                            <h1 class="p_num" >6</h1>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<div th:replace="footer :: footer">...</div>
+</body>
+</html>

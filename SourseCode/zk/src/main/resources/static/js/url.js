@@ -15,35 +15,24 @@ function getPath() {
 	return ipath;
 }
 
-function getBasePath_manage(){
-	return getPath();
-}
-
-
-
 function getUrl_manage() {
-	return {
-		//后台请求
-		ceshi3:getPath()+getinterface_service().ceshi3,
 
-		ceshi2:getPath()+getinterface_service().ceshi2,
-	};
-}
-
-
-function getinterface_service() {
-
-	var basepath="/sweb";
+	// var basepath="/zk";
+	var basepath="/";
 
 	return {
 		//后台请求
-		ceshi3:basepath+"/ceshi/ceshi3",
+		gotologin:getPath()+basepath+"main/gotologin",
 
-		ceshi2:basepath+"/ceshi/ceshi2",
+		logining:getPath()+basepath+"main/logining",
+
+		main:getPath()+basepath+"main/gotomain",
+		logout:getPath()+basepath+"main/logout",
+
+		controlList:getPath()+basepath+"cache/getControlInfoAll",
+
+		clearControlInfo:getPath()+basepath+"cache/clearControlInfo"
 	};
 }
-
-
-var pageid;
 
 

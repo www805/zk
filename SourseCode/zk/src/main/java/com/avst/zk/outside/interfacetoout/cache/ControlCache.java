@@ -2,7 +2,9 @@ package com.avst.zk.outside.interfacetoout.cache;
 
 
 
+import com.avst.zk.common.util.DateUtil;
 import com.avst.zk.common.vo.ControlInfoParamVO;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,15 +51,22 @@ public class ControlCache {
 
     public static synchronized  boolean setControlInfo(String ciid, ControlInfoParamVO ciparam){
         List<ControlInfoParamVO> list=getControlInfoList(ciid);
+        Boolean addStu = false;
         if(null!=list){
             if(list.size() > 0){
                 int i=0;
                 for(ControlInfoParamVO ci:list){
 
-//                    if(ciparam.getIp().equals(ci.getIp())){
+                    if(ciparam.getServername().equals(ci.getServername())){
 //                        list.remove(i);
-//                        break;
-//                    }
+                        ci.setUse_item(ciparam.getUse_item());
+                        ci.setTotal_item(ciparam.getTotal_item());
+                        ci.setStatus(ciparam.getStatus());
+//                        ci.setCreatetime(ciparam.getCreatetime());
+                        ci.setServername(ciparam.getServername());
+                        addStu = true;
+                        break;
+                    }
                     i++;
 
                 }
@@ -65,7 +74,10 @@ public class ControlCache {
         }else{
             list=new ArrayList<ControlInfoParamVO>();
         }
-        list.add(ciparam);
+        if (addStu == false) {
+            ciparam.setCreatetime(DateUtil.getDateAndMinute());//设置当前时间
+            list.add(ciparam);
+        }
         setControlInfoList(ciid,list);
         return true;
     }

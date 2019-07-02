@@ -1,5 +1,6 @@
 package com.avst.zk.common.vo;
 
+import com.avst.zk.common.param.ControlInfoParam;
 import com.avst.zk.common.util.StatusCode;
 
 import java.util.Date;

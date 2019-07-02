@@ -10,15 +10,15 @@ import com.avst.zk.common.util.DateUtil;
  */
 public class RResult<T> {
 
-	
+
 	private String version ;
-	
+
 	private String actioncode;
-	
+
 	private T data;
-	
+
 	private String endtime;
-	
+
 	private String message;
 
 	/**
@@ -41,7 +41,17 @@ public class RResult<T> {
 		actioncode=Code.FAIL.toString();
 	}
 
-	
+	public void changeToTrue(){
+		message="请求成功";
+		actioncode=Code.SUCCESS.toString();
+	}
+
+	public void changeToTrue(T t){
+		data=t;
+		message="请求成功";
+		actioncode=Code.SUCCESS.toString();
+	}
+
 	public String getVersion() {
 		return version;
 	}
@@ -84,5 +94,5 @@ public class RResult<T> {
 
 
 
-	
+
 }
