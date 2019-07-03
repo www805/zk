@@ -10,7 +10,8 @@
 <div class="layui-fluid layadmin-message-fluid" style="padding: 0 15px">
     <div class="layui-card-header" style="margin-top: 5px;">
         <span th:text="${controlListModel.title}">123</span>
-        <button class="layui-btn layui-btn-normal" style="float: right;" onclick="clearControlInfo()">清空已断开的服务</button>
+        <button class="layui-btn layui-btn-normal" style="float: right;" onclick="clearControlInfo();">清空已断开的服务</button>
+        <button class="layui-btn layui-btn-normal" style="float: right;margin-right: 10px;" onclick="window.location.reload();">刷新</button>
     </div>
 
     <div id="wushuju" style="font-size: 24px;color: #90a2bc;text-align: center;margin-top: 30px;">暂无服务器连接</div>

@@ -42,14 +42,6 @@ public class ControlInfoService extends BaseAction {
     //getHeartbeat
     public void getHeartbeat(RResult result, ReqParam<ControlInfoParamVO> param) {
 
-        //对所有赋值
-        List<ControlInfoParamVO> list = ControlCache.getControlInfoList("list");
-        if (null != list && list.size() > 0) {
-            for (ControlInfoParamVO paramVO : list) {
-                paramVO.setStatus(0);
-            }
-        }
-
         //放进缓存里面
         ControlInfoParamVO paramVO = param.getParam();
         System.out.println(paramVO);

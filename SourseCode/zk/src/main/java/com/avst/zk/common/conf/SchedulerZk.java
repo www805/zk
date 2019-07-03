@@ -1,5 +1,6 @@
 package com.avst.zk.common.conf;
 
+import com.avst.zk.common.util.LogUtil;
 import com.avst.zk.common.vo.ControlInfoParamVO;
 import com.avst.zk.outside.interfacetoout.cache.ControlCache;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -28,5 +29,7 @@ public class SchedulerZk {
                 paramVO.setStatus(0);
             }
         }
+        LogUtil.intoLog("设置所有服务状态为断开");
+        System.out.println("设置所有服务状态为断开");
     }
 }

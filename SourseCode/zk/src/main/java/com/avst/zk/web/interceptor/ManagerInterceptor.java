@@ -1,6 +1,7 @@
 package com.avst.zk.web.interceptor;
 
 import com.avst.zk.common.conf.Constant;
+import com.avst.zk.common.conf.UserCache;
 import com.avst.zk.common.util.LogUtil;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -24,8 +25,8 @@ public class ManagerInterceptor extends HandlerInterceptorAdapter {
 
         boolean disbool=true;
         String forstpageid="/main/gotologin";//登录界面
-        if(null==session.getAttribute(Constant.MANAGE_USER)){//web客户端session
-            disbool=false;
+        if (null == UserCache.getUserCache()) {//session.getAttribute(Constant.MANAGE_USER) web客户端session
+            disbool = false;
         }
 
         String url=request.getRequestURI();

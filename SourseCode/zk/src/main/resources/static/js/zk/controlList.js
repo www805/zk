@@ -20,7 +20,6 @@ function getControlPageByParam_init(currPage,pageSize){
 
 function getControlPage(name,currPage,pageSize){
 
-
     var url=getUrl_manage().controlList;
     var data={
         token:"",

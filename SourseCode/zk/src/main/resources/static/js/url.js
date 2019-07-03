@@ -31,7 +31,9 @@ function getUrl_manage() {
 
 		controlList:getPath()+basepath+"cache/getControlInfoAll",
 
-		clearControlInfo:getPath()+basepath+"cache/clearControlInfo"
+		clearControlInfo:getPath()+basepath+"cache/clearControlInfo",
+
+		ZKcontrolList:getPath()+basepath+"zk/getControlInfoAll"
 	};
 }
 

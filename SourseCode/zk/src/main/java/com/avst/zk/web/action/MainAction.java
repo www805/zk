@@ -2,6 +2,7 @@ package com.avst.zk.web.action;
 
 
 import com.avst.zk.common.conf.Constant;
+import com.avst.zk.common.conf.UserCache;
 import com.avst.zk.common.util.DateUtil;
 import com.avst.zk.common.util.baseaction.BaseAction;
 import com.avst.zk.common.util.baseaction.RResult;
@@ -38,7 +39,7 @@ public class MainAction extends BaseAction {
         RResult rResult=createNewResultOfFail();
 
         model.addAttribute("result", rResult);
-        model.addAttribute("title", "欢迎进入设备管理系统");
+        model.addAttribute("title", "欢迎进入AVST总控管理系统");
 
 //        request.getSession().setAttribute(Constant.MANAGE_WEB,null);
 
@@ -60,7 +61,8 @@ public class MainAction extends BaseAction {
         RResult rResult=createNewResultOfFail();
         this.changeResultToSuccess(rResult);
         rResult.setMessage("退出成功");
-        request.getSession().setAttribute(Constant.MANAGE_USER,null);
+        UserCache.delUserCache();
+//        request.getSession().setAttribute(Constant.MANAGE_USER,null);
 //        Subject subject = SecurityUtils.getSubject();
 //        subject.logout();
         return rResult;
@@ -72,6 +74,13 @@ public class MainAction extends BaseAction {
     @RequestMapping(value = "/gotomain")
     public ModelAndView gotomain(Model model){
         model.addAttribute("title","AVST总控管理系统");
+        //把用户名传到页面上
+        String username = "";
+        if(null != UserCache.getUserCache()){
+            username = UserCache.getUserCache().getUsername();
+        }
+        model.addAttribute("username", username);
+
         return  new ModelAndView("sweb/main","mainModel", model);
     }
 
