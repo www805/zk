@@ -29,7 +29,7 @@ public class SchedulerZk {
                 paramVO.setStatus(0);
             }
         }
-        LogUtil.intoLog("设置所有服务状态为断开");
+//        LogUtil.intoLog("设置所有服务状态为断开");
         System.out.println("设置所有服务状态为断开");
     }
 }

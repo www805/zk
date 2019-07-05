@@ -97,11 +97,11 @@
 
                     <li class="layui-nav-item">
                         <a class="" href="javascript:;">所有系统<span class="layui-nav-more"></span></a>
-                        <dl class="layui-nav-child">
-                            <dd><a title="http://localhost:8080/cweb/base/main/gotomain" value="TRM" onclick="ServerCheck(this);">业务系统<span class="layui-badge layui-bg-gray" id="trmMsg">TRM</span></a></dd>
-                            <dd><a title="http://localhost:8081/ec/main/gotomain" value="EC" onclick="ServerCheck(this);">设备系统<span class="layui-badge layui-bg-gray" id="ecMsg">EC</span></a></dd>
-                            <dd><a title="http://localhost:8082" value="MC" onclick="ServerCheck(this);">会议系统<span class="layui-badge layui-bg-gray" id="mcMsg">MC</span></a></dd>
-                            <dd><a title="http://localhost:8080/sweb/base/home/main" value="TRM" onclick="ServerCheck(this);">后台服务器系统<span class="layui-badge layui-bg-gray" id="trmService">TRM</span></a></dd>
+                        <dl class="layui-nav-child" id="xitonglist">
+                            <!--<dd><a title="http://localhost:8080/cweb/base/main/gotomain" value="TRM" onclick="ServerCheck(this);">业务系统<span class="layui-badge layui-bg-gray" id="trmMsg">TRM</span></a></dd>-->
+                            <!--<dd><a title="http://localhost:8081/ec/main/gotomain" value="EC" onclick="ServerCheck(this);">设备系统<span class="layui-badge layui-bg-gray" id="ecMsg">EC</span></a></dd>-->
+                            <!--<dd><a title="http://localhost:8082" value="MC" onclick="ServerCheck(this);">会议系统<span class="layui-badge layui-bg-gray" id="mcMsg">MC</span></a></dd>-->
+                            <!--<dd><a title="http://localhost:8080/sweb/base/home/main" value="TRM" onclick="ServerCheck(this);">后台服务器系统<span class="layui-badge layui-bg-gray" id="trmService">TRM</span></a></dd>-->
                         </dl>
                     </li>
                     <li class="layui-nav-item"><a th:href="@{/main/gotocontrol}" target="optionZK">监控列表</a></li>
@@ -136,6 +136,7 @@
         setInterval(function() {
             getControl();
         },5000);
+
     });
 
     layui.use(['layer','element','laytpl'], function(){

@@ -29,26 +29,39 @@ function callControl(data){
         if(isNotEmpty(data.data)){
             var list = data.data;
             var ControlInfoParamVO = null;
-
-            //连接成功的时候删除
-            $("#ecMsg").addClass("layui-bg-gray");
-            $("#mcMsg").addClass("layui-bg-gray");
-            $("#trmMsg").addClass("layui-bg-gray");
-            $("#trmService").addClass("layui-bg-gray");
+            var xitonglistHTML = "";
 
             for (var i = 0; i < list.length; i++) {
                 ControlInfoParamVO = list[i];
+
+                var servername = ControlInfoParamVO.servername;
+                var servertitle = ControlInfoParamVO.servertitle;
+                var servertitletwo = ControlInfoParamVO.servertitletwo;
+                var loginaccount = ControlInfoParamVO.loginusername;
+                var adminpassword = ControlInfoParamVO.loginpassword;
+                var url = ControlInfoParamVO.url + "?loginaccount=" + loginaccount + "&loginpassword=" + adminpassword;
+                var urltwo = ControlInfoParamVO.urltwo + "?loginaccount=" + loginaccount + "&loginpassword=" + adminpassword;
+                var status = ControlInfoParamVO.status;
+                var spanState = "<span class=\"layui-badge layui-bg-gray\"";
+
                 //连接失败的时候新增
-                if (ControlInfoParamVO.servername == "ec" && ControlInfoParamVO.status == 1) {
-                    $("#ecMsg").removeClass("layui-bg-gray");
-                }else if(ControlInfoParamVO.servername == "mc" && ControlInfoParamVO.status == 1){
-                    $("#mcMsg").removeClass("layui-bg-gray");
-                }else if(ControlInfoParamVO.servername == "trm" && ControlInfoParamVO.status == 1){
-                    $("#trmMsg").removeClass("layui-bg-gray");
-                    $("#trmService").removeClass("layui-bg-gray");
+                //连接成功的时候删除
+                if (status == 1) {
+                    spanState = "<span style='background-color:#5FB878;' class=\"layui-badge \"";
+                }
+
+                //配置到列表里面
+                xitonglistHTML += "<dd><a title=\"" + url + "\" value=\"" + servername.toUpperCase() + "\" onclick=\"ServerCheck(this);\">" + servertitle + spanState + " id=\"" + servername + "Msg\">" + servername.toUpperCase() + "</span></a></dd>";
+
+                if(isNotEmpty(servertitletwo) && isNotEmpty(urltwo)){
+                    xitonglistHTML += "<dd><a title=\"" + urltwo + "\" value=\"" + servername.toUpperCase() + "\" onclick=\"ServerCheck(this);\">" + servertitletwo + spanState + " id=\"" + servername + "Msg\">" + servername.toUpperCase() + "</span></a></dd>";
                 }
             }
 
+            $("#xitonglist").html(xitonglistHTML);
+        }else{
+            var xitonglistHTML = "<dd><a href='javascript:;'>暂无服务器</a> </dd>";
+            $("#xitonglist").html(xitonglistHTML);
         }
     }else{
         layer.msg(data.message,{icon: 2});
@@ -60,13 +73,21 @@ function callServerCheck(data){
     if(null!=data&&data.actioncode=='SUCCESS'){
         //alert(data.message);
 
-        if (null != data.data) {
+        if(isNotEmpty(data.data)){
             var list = data.data;
-            var ControlInfoParamVO = "";
+            var ControlInfoParamVO = null;
+
+            var loginaccount = "";
+            var adminpassword = "";
 
             for (var i = 0; i < list.length; i++) {
                 ControlInfoParamVO = list[i];
-                if(ServerOut == ControlInfoParamVO.servername.toUpperCase() && ControlInfoParamVO.status == 1){
+                var servername = ControlInfoParamVO.servername.toUpperCase();
+                var status = ControlInfoParamVO.status;
+
+                if(ServerOut == servername && status == 1){
+                    loginaccount = ControlInfoParamVO.loginusername;
+                    adminpassword = ControlInfoParamVO.loginpassword;
                     document.getElementById('optionZK').src = urlDizhi;
                     return;
                 }
@@ -80,5 +101,6 @@ function callServerCheck(data){
     }
 
 }
+
 
 

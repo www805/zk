@@ -27,12 +27,14 @@
             <col>
             <col>
             <col>
+            <col>
             <col width="200">
         </colgroup>
         <thead>
         <tr>
             <th>序号</th>
             <th>服务器名称</th>
+            <th>服务器中文名</th>
             <th>总业务数</th>
             <th>可使用业务数</th>
             <th>创建时间</th>
@@ -44,6 +46,7 @@
         <tr>
             <td>{{index+1}}</td>
             <td>{{value.servername==null?"":value.servername}}</td>
+            <td>{{value.servertitle==null?"":value.servertitle}}</td>
             <td>{{value.total_item==null?"":value.total_item}}</td>
             <td>{{value.use_item==null?"":value.use_item}}</td>
             <td>{{value.createtime==null?"暂无":value.createtime}}</td>
