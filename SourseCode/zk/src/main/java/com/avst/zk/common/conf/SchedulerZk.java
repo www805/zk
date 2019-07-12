@@ -6,6 +6,10 @@ import com.avst.zk.outside.interfacetoout.cache.ControlCache;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,22 +18,42 @@ import java.util.List;
  */
 @Component
 public class SchedulerZk {
-    //每个小时的第五分钟执行
 
     /**
-     * 1分钟心跳一次
+     * 30秒心跳一次
+     * 0 0/1 * * * ?
      */
-    @Scheduled(cron = "0 0/1 * * * ? ")
+    @Scheduled(cron = "0/30 * * * * ? ")
     public void testTasks() {
         //清空缓存
 //        ControlCache.delControlInfoList("list");
         List<ControlInfoParamVO> list = ControlCache.getControlInfoList("list");
         if (null != list && list.size() > 0) {
             for (ControlInfoParamVO paramVO : list) {
-                paramVO.setStatus(0);
+                //判断时间如果30秒没连接就设置为断线状态
+                int i = calLastedTime(paramVO.getLasttime());
+                if (i >= 30) {
+                    paramVO.setStatus(0);
+                }
             }
         }
-//        LogUtil.intoLog("设置所有服务状态为断开");
-        System.out.println("设置所有服务状态为断开");
+        LogUtil.intoLog("检测所有服务心跳，如果30秒内没上报，状态设置为断开");
+//        System.out.println("设置服务状态为断开");
+    }
+
+    //判断两个时间相差几秒
+    public  int calLastedTime(String lasttime) {
+        long a = new Date().getTime();
+
+        DateFormat formatter  = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Date parse = null;
+        try {
+            parse = formatter.parse(lasttime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        long b = parse.getTime();
+        int c = (int)((a - b) / 1000);return c;
     }
 }

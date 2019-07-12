@@ -2,6 +2,7 @@ package com.avst.zk.outside.interfacetoout.v1.service;
 
 import com.avst.zk.common.param.ControlInfoParam;
 import com.avst.zk.common.util.DateUtil;
+import com.avst.zk.common.util.LogUtil;
 import com.avst.zk.common.util.baseaction.BaseAction;
 import com.avst.zk.common.util.baseaction.RResult;
 import com.avst.zk.common.util.baseaction.ReqParam;
@@ -44,11 +45,15 @@ public class ControlInfoService extends BaseAction {
 
         //放进缓存里面
         ControlInfoParamVO paramVO = param.getParam();
-        System.out.println(paramVO);
+//        System.out.println(paramVO);
 
-        ControlCache.setControlInfo("list", paramVO);
+        if(null != paramVO){
+            ControlCache.setControlInfo("list", paramVO);
 
-        changeResultToSuccess(result);
+            LogUtil.intoLog(ControlCache.getControlInfoByServername("list", paramVO.getServername()));
+            changeResultToSuccess(result);
+        }
+
     }
 
 }

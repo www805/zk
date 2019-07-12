@@ -1,8 +1,14 @@
 var urlDizhi;
 var ServerOut;
+var loadIndex;
 
 //检测服务器是否是连接状态
 function ServerCheck(obj){
+
+    loadIndex = layer.load(1, {
+        shade: [0.1,'#fff'] //0.1透明度的白色背景
+        ,title:"加载中，请稍后..."
+    });
 
     urlDizhi = obj.title;
     ServerOut = $(obj).attr("value");
@@ -51,10 +57,10 @@ function callControl(data){
                 }
 
                 //配置到列表里面
-                xitonglistHTML += "<dd><a title=\"" + url + "\" value=\"" + servername.toUpperCase() + "\" onclick=\"ServerCheck(this);\">" + servertitle + spanState + " id=\"" + servername + "Msg\">" + servername.toUpperCase() + "</span></a></dd>";
+                xitonglistHTML += "<dd><a title=\"" + url + "\" style='cursor:pointer;' value=\"" + servername.toUpperCase() + "\" onclick=\"ServerCheck(this);\">" + servertitle + spanState + " id=\"" + servername + "Msg\">" + servername.toUpperCase() + "</span></a></dd>";
 
                 if(isNotEmpty(servertitletwo) && isNotEmpty(urltwo)){
-                    xitonglistHTML += "<dd><a title=\"" + urltwo + "\" value=\"" + servername.toUpperCase() + "\" onclick=\"ServerCheck(this);\">" + servertitletwo + spanState + " id=\"" + servername + "Msg\">" + servername.toUpperCase() + "</span></a></dd>";
+                    xitonglistHTML += "<dd><a title=\"" + urltwo + "\" style='cursor:pointer;' value=\"" + servername.toUpperCase() + "\" onclick=\"ServerCheck(this);\">" + servertitletwo + spanState + " id=\"" + servername + "Msg\">" + servername.toUpperCase() + "</span></a></dd>";
                 }
             }
 
@@ -64,11 +70,14 @@ function callControl(data){
             $("#xitonglist").html(xitonglistHTML);
         }
     }else{
-        layer.msg(data.message,{icon: 2});
+        console.log(data.message);
+        // layer.msg(data.message,{icon: 2});
     }
 
 }
 function callServerCheck(data){
+
+    layer.close(loadIndex);//关闭load特效
 
     if(null!=data&&data.actioncode=='SUCCESS'){
         //alert(data.message);
