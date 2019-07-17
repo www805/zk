@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title th:text="${title}">欢迎登录会议管理系统</title>
+<title id="topTitle" th:text="${title}">欢迎登录会议管理系统</title>
 <link href="/uimaker/css/style.css" rel="stylesheet" type="text/css" />
 </head>
 
@@ -13,7 +13,7 @@
     </div>
 
 <div class="logintop">
-    <span th:text="${title}">欢迎登录会议管理界面</span>
+    <span id="spanTitle" th:text="${title}">欢迎登录会议管理界面</span>
     <ul>
     <li><a href="#">回首页</a></li>
     <li><a href="#">帮助</a></li>
@@ -39,7 +39,7 @@
 
 
 
-    <div class="loginbm">版权所有  2019  <a href="http://www.avst.cn">顺泰伟成科技有限公司</a> </div>
+    <div id="bottom_mian" class="loginbm">版权所有  2019  <a href="http://www.avst.cn">顺泰伟成科技有限公司</a> </div>
 
     <div th:replace="footer :: footer">...</div>
 </body>
@@ -51,7 +51,7 @@
         $(window).resize(function(){
             $('.loginbox').css({'position':'absolute','left':($(window).width()-692)/2});
         })
-
+        getNavList();
     });
 </script>
 

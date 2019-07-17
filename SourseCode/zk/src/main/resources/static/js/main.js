@@ -28,6 +28,39 @@ function getControl(){
 
 }
 
+
+function getNavList() {
+    var url=getUrl_manage().getNavList;
+    ajaxSubmitByJson(url,null,callgetNavList);
+}
+
+function callgetNavList(data) {
+    if(null!=data&&data.actioncode=='SUCCESS'){
+
+        if (isNotEmpty(data.data)) {
+            var appCache = data.data;
+
+            //页头
+            var Top_Title = appCache.data.title;
+            $("#topTitle").html(Top_Title);
+            $("#spanTitle").html(Top_Title);
+
+            //页脚
+            var bottom_name = appCache.data.bottom.name;
+            var bottom_declaration = appCache.data.bottom.declaration;
+            var bottom_url = appCache.data.bottom.url;
+            var bottom_html = bottom_declaration + " <a href=\"" + bottom_url + "\">" + bottom_name + "</a>";
+            $("#bottom_mian").html(bottom_html);
+        }
+        layui.use('element', function(){
+            var element =  layui.element;
+            element.render();
+        });
+    }else{
+        layer.msg(data.message);
+    }
+}
+
 function callControl(data){
 
     if(null!=data&&data.actioncode=='SUCCESS'){

@@ -40,6 +40,20 @@
             <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
         </dependency>
 
+        <!--功能性的添加jar包-->
+        <dependency>
+            <groupId>com.ndktools</groupId>
+            <artifactId>javamd5</artifactId>
+            <version>1.7.1</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.yaml/snakeyaml -->
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>1.23</version>
+        </dependency>
+
         <!-- thymeleaf模板引擎引入-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

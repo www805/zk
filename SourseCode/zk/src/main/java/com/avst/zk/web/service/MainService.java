@@ -1,24 +1,34 @@
 package com.avst.zk.web.service;
 
-import com.avst.zk.common.conf.Constant;
+import com.avst.zk.common.cache.AppCache;
+import com.avst.zk.common.cache.param.AppCacheParam;
 
 import com.avst.zk.common.conf.UserCache;
 import com.avst.zk.common.util.LogUtil;
+import com.avst.zk.common.util.OpenUtil;
 import com.avst.zk.common.util.baseaction.RResult;
 import com.avst.zk.common.util.baseaction.ReqParam;
 import com.avst.zk.feignclient.trm.TrmControl;
 import com.avst.zk.feignclient.trm.req.UserloginParam;
 import com.avst.zk.web.req.LoginParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.yaml.snakeyaml.Yaml;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Map;
 
 @Service
 public class MainService {
 
     @Autowired
     private TrmControl trmControl;
+
+    @Value("${nav.file.service}")
+    private String swebFile;
 
     public RResult logining(RResult result, HttpServletRequest request, LoginParam loginParam){
 
@@ -50,4 +60,33 @@ public class MainService {
         return result;
     }
 
+    public void getNavList(RResult result) {
+
+        AppCacheParam cacheParam = AppCache.getAppCacheParam();
+        if(null == cacheParam.getData()){
+            String path = OpenUtil.getXMSoursePath() + "\\" + swebFile + ".yml";
+            FileInputStream fis = null;
+            try {
+                fis = new FileInputStream(path);
+
+                Yaml yaml = new Yaml();
+                Map<String,Object> map = yaml.load(fis);
+                cacheParam.setData(map);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }finally {
+                if(null != fis){
+                    try {
+                        fis.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        result.setData(cacheParam);
+        result.changeToTrue();
+
+    }
 }

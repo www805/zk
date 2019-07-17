@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" >
 <head>
     <meta charset="UTF-8">
-    <title th:text="${mainModel.title}">智能总控系统</title>
+    <title id="topTitle" th:text="${mainModel.title}">智能总控系统</title>
     <link rel="stylesheet" href="/layui/css/layui.css">
     <link rel="icon" href="/uimaker/images/Logo.png" type="images/x-ico" />
     <link rel="stylesheet" href="/uimaker/css/common.css">
@@ -43,7 +43,7 @@
 <div class="layui-layout layui-layout-admin" >
 
     <div class="layui-header"  style="">
-        <a th:href="@{/main/gotomain}"><h1 class="layui-logo"  style="color: #fff;font-size: 18px;" th:text="${mainModel.title}"></h1></a>
+        <a th:href="@{/main/gotomain}"><h1 class="layui-logo" id="spanTitle" style="color: #fff;font-size: 18px;" th:text="${mainModel.title}"></h1></a>
         <ul class="layui-nav layui-layout-left">
             <!--<li class="layui-nav-item">-->
                 <!--<a target="option" th:href="@{/cweb/police/policePage/toaddCaseToUser}">-->
@@ -116,7 +116,7 @@
     </div>
 
     <div class="layui-footer"  style="left: 0; height: 30px; line-height: 30px;font-size: 12px">
-        <p style=" text-align:center;">版权所有  © 2019 <a href="http://www.avst.cn">顺泰伟成科技有限公司</a></p>
+        <p id="bottom_mian" style=" text-align:center;">版权所有  © 2019 <a href="http://www.avst.cn">顺泰伟成科技有限公司</a></p>
     </div>
 </div>
 
@@ -135,8 +135,8 @@
         getControl();
         setInterval(function() {
             getControl();
-        },5000);
-
+        },10000);
+        getNavList();
     });
 
     layui.use(['layer','element','laytpl'], function(){

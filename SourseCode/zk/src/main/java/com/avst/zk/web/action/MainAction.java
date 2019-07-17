@@ -1,6 +1,7 @@
 package com.avst.zk.web.action;
 
 
+import com.avst.zk.common.cache.AppCache;
 import com.avst.zk.common.conf.Constant;
 import com.avst.zk.common.conf.UserCache;
 import com.avst.zk.common.util.DateUtil;
@@ -38,6 +39,8 @@ public class MainAction extends BaseAction {
     public ModelAndView gotologin(Model model, HttpServletRequest request) {
         RResult rResult=createNewResultOfFail();
 
+
+
         model.addAttribute("result", rResult);
         model.addAttribute("title", "欢迎进入AVST总控管理系统");
 
@@ -46,11 +49,25 @@ public class MainAction extends BaseAction {
         return new ModelAndView("sweb/login", "login", model);
     }
 
+    /**
+     * 获取导航栏目
+     * @return
+     */
+    @RequestMapping("/getNavList")
+    @ResponseBody
+    public  RResult getNavList(){
+        RResult result=this.createNewResultOfFail();
+        mainService.getNavList(result);
+        result.setEndtime(DateUtil.getDateAndMinute());
+        return result;
+    }
+
     @PostMapping(value = "/logining")
     @ResponseBody
     public RResult checklogin(Model model, HttpServletRequest request, LoginParam loginParam) {
         RResult result=createNewResultOfFail();
         mainService.logining(result,request,loginParam);
+        AppCache.delAppCacheParam();
         result.setEndtime(DateUtil.getDateAndMinute());
         return result;
     }

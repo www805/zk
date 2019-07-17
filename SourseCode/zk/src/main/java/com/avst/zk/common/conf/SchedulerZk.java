@@ -20,10 +20,10 @@ import java.util.List;
 public class SchedulerZk {
 
     /**
-     * 30秒心跳一次
+     * 2分钟跳一次
      * 0 0/1 * * * ?
      */
-    @Scheduled(cron = "0/30 * * * * ? ")
+    @Scheduled(cron = "0 0/2 * * * ? ")
     public void testTasks() {
         //清空缓存
 //        ControlCache.delControlInfoList("list");
@@ -32,7 +32,7 @@ public class SchedulerZk {
             for (ControlInfoParamVO paramVO : list) {
                 //判断时间如果30秒没连接就设置为断线状态
                 int i = calLastedTime(paramVO.getLasttime());
-                if (i >= 30) {
+                if (i >= 180) {
                     paramVO.setStatus(0);
                 }
             }
