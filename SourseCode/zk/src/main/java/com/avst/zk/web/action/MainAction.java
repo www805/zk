@@ -78,6 +78,7 @@ public class MainAction extends BaseAction {
         RResult rResult=createNewResultOfFail();
         this.changeResultToSuccess(rResult);
         rResult.setMessage("退出成功");
+        AppCache.delAppCacheParam();
         UserCache.delUserCache();
 //        request.getSession().setAttribute(Constant.MANAGE_USER,null);
 //        Subject subject = SecurityUtils.getSubject();

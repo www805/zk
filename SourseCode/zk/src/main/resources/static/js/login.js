@@ -42,20 +42,27 @@ function getNavList() {
 function callgetNavList(data) {
     if(null!=data&&data.actioncode=='SUCCESS'){
 
-        if (isNotEmpty(data.data)) {
+        if (isNotEmpty(data.data.data)) {
             var appCache = data.data;
 
-            //页头
-            var Top_Title = appCache.data.title;
-            $("#topTitle").html(Top_Title);
-            $("#spanTitle").html(Top_Title);
+            if (isNotEmpty(appCache.data.title)) {
+                //页头
+                var Top_Title = appCache.data.title;
+                $("#topTitle").html(Top_Title);
+                $("#spanTitle").html(Top_Title);
+            }
 
-            //页脚
-            var bottom_name = appCache.data.bottom.name;
-            var bottom_declaration = appCache.data.bottom.declaration;
-            var bottom_url = appCache.data.bottom.url;
-            var bottom_html = bottom_declaration + " <a href=\"" + bottom_url + "\">" + bottom_name + "</a>";
-            $("#bottom_mian").html(bottom_html);
+            if (isNotEmpty(appCache.data.bottom)) {
+                if (!isNotEmpty(appCache.data.bottom) || !isNotEmpty(appCache.data.bottom.name) || !isNotEmpty(appCache.data.bottom.declaration) || !isNotEmpty(appCache.data.bottom.url)) {
+                    return;
+                }
+                //页脚
+                var bottom_name = appCache.data.bottom.name;
+                var bottom_declaration = appCache.data.bottom.declaration;
+                var bottom_url = appCache.data.bottom.url;
+                var bottom_html = bottom_declaration + " <a href=\"" + bottom_url + "\">" + bottom_name + "</a>";
+                $("#bottom_mian").html(bottom_html);
+            }
         }
         layui.use('element', function(){
             var element =  layui.element;
