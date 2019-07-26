@@ -42,7 +42,7 @@ public class MainAction extends BaseAction {
 
 
         model.addAttribute("result", rResult);
-        model.addAttribute("title", "欢迎进入AVST总控管理系统");
+        model.addAttribute("title", "欢迎进入总控管理系统");
 
 //        request.getSession().setAttribute(Constant.MANAGE_WEB,null);
 
@@ -91,7 +91,7 @@ public class MainAction extends BaseAction {
      */
     @RequestMapping(value = "/gotomain")
     public ModelAndView gotomain(Model model){
-        model.addAttribute("title","AVST总控管理系统");
+        model.addAttribute("title","总控管理系统");
         //把用户名传到页面上
         String username = "";
         if(null != UserCache.getUserCache()){
