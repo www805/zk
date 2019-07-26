@@ -30,14 +30,14 @@ public class SchedulerZk {
         List<ControlInfoParamVO> list = ControlCache.getControlInfoList("list");
         if (null != list && list.size() > 0) {
             for (ControlInfoParamVO paramVO : list) {
-                //判断时间如果30秒没连接就设置为断线状态
+                //判断时间如果2分钟没连接就设置为断线状态
                 int i = calLastedTime(paramVO.getLasttime());
                 if (i >= 180) {
                     paramVO.setStatus(0);
                 }
             }
         }
-        LogUtil.intoLog("检测所有服务心跳，如果30秒内没上报，状态设置为断开");
+        LogUtil.intoLog("检测所有服务心跳，如果3分钟没上报，状态设置为断开");
 //        System.out.println("设置服务状态为断开");
     }
 

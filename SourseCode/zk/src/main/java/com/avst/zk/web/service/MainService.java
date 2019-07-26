@@ -74,6 +74,7 @@ public class MainService {
                 Yaml yaml = new Yaml();
                 Map<String,Object> map = yaml.load(fis);
                 Map<String,Object> avstYml = (Map<String, Object>) map.get(application_name);
+                avstYml.put("bottom", map.get("bottom"));
                 if (null != map && map.size() > 0) {
                     cacheParam.setTitle((String) avstYml.get("title"));
                 }
