@@ -34,7 +34,7 @@
         <a href="http://localhost:8079/" th:href="${zk_button_url}">
             <div class="zk_button" th:text="${zk_button_title}">进入总控系统</div>
         </a>
-        <a href="http://localhost/cweb/base/main/gotomain" th:href="${client_button_url}">
+        <a href="http://localhost/cweb/base/main/gotomain" th:href="${client_button_url}" id="goto_client">
             <div class="client_button" th:text="${client_button_title}">进入客户端</div>
         </a>
     </div>
@@ -50,7 +50,20 @@
         $(window).resize(function(){
             $('.openbox').css({'position':'absolute','left':($(window).width()-692)/2});
         })
+
+        //回车跳转
+        $(document).keypress(function (e) {
+            if (e.which == 13) {
+                var href=$("#goto_client").attr("href");
+                window.location.href=href;
+                event.preventDefault();
+            }
+        });
+
     });
+
+
+
 </script>
 
 </html>
