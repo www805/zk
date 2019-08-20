@@ -2,6 +2,7 @@ package com.avst.zk.web.action;
 
 
 import com.avst.zk.common.cache.AppCache;
+import com.avst.zk.common.cache.param.AppCacheParam;
 import com.avst.zk.common.conf.Constant;
 import com.avst.zk.common.conf.UserCache;
 import com.avst.zk.common.util.DateUtil;
@@ -9,6 +10,7 @@ import com.avst.zk.common.util.baseaction.BaseAction;
 import com.avst.zk.common.util.baseaction.RResult;
 import com.avst.zk.web.req.LoginParam;
 import com.avst.zk.web.service.MainService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/main")
@@ -111,6 +114,38 @@ public class MainAction extends BaseAction {
         return  new ModelAndView("sweb/control/controlList","controlListModel", model);
     }
 
+    @RequestMapping(value = "/goguidepage")
+    public ModelAndView goguidepage(Model model){
+        AppCacheParam cacheParam = AppCache.getAppCacheParam();
+        if (StringUtils.isBlank(cacheParam.getTitle()) || null == cacheParam.getData()) {
+            this.getNavList();
+            cacheParam = AppCache.getAppCacheParam();
+        }
+        Map<String, Object> map = cacheParam.getData();
 
+        String title = "";
+        String client_button_title = "";
+        String client_button_url = "";
+        String zk_button_title = "";
+        String zk_button_url = "";
+        if (null != map) {
+            Map<String, Object> guidepagemap = (Map<String, Object>) map.get("guidepage");
+            Map<String, Object> client_button = (Map<String, Object>) guidepagemap.get("client_button");
+            Map<String, Object> zk_button = (Map<String, Object>) guidepagemap.get("zk_button");
+
+            title = (String) guidepagemap.get("title");
+            client_button_title = (String) client_button.get("title");
+            client_button_url = (String) client_button.get("url");
+            zk_button_title = (String) zk_button.get("title");
+            zk_button_url = (String) zk_button.get("url");
+        }
+
+        model.addAttribute("title",title);
+        model.addAttribute("client_button_title",client_button_title);
+        model.addAttribute("client_button_url",client_button_url);
+        model.addAttribute("zk_button_title",zk_button_title);
+        model.addAttribute("zk_button_url",zk_button_url);
+        return  new ModelAndView("sweb/guidepage","goguidepageModel", model);
+    }
 
 }

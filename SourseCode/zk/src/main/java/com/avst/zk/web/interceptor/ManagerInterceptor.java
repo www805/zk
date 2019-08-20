@@ -24,7 +24,7 @@ public class ManagerInterceptor extends HandlerInterceptorAdapter {
         HttpSession session=request.getSession();
 
         boolean disbool=true;
-        String forstpageid="/main/gotologin";//登录界面
+        String forstpageid="/main/goguidepage";//登录界面
         if (null == UserCache.getUserCache()) {//session.getAttribute(Constant.MANAGE_USER) web客户端session
             disbool = false;
         }
