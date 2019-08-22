@@ -19,6 +19,9 @@
         .zk_button{
             width: 100px;height: 25px;color:#fff;background-color: #687f92;text-align:center;line-height: 24px;position: absolute;right: 0;top: 75px;
         }
+        .client_button:hover {
+            box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+        }
     </style>
 </head>
 
@@ -31,10 +34,10 @@
 
     <div class="openbox" >
         <h2 style="text-align: center;font-size: 30px;margin: 20px 0 50px 0;" th:text="${title}">欢迎进入智能笔录系统引导页面</h2>
-        <a href="http://localhost:8079/" th:href="${zk_button_url}">
+        <a onclick="goto_zk();" th:href="${zk_button_url}" title="点击进入总控系统" id="goto_zk">
             <div class="zk_button" th:text="${zk_button_title}">进入总控系统</div>
         </a>
-        <a href="http://localhost/cweb/base/main/gotomain" th:href="${client_button_url}" id="goto_client">
+        <a   onclick="goto_client();"  th:href="${client_button_url}" id="goto_client" title="点击进入客户端">
             <div class="client_button" th:text="${client_button_title}">进入客户端</div>
         </a>
     </div>
@@ -54,12 +57,55 @@
         //回车跳转
         $(document).keypress(function (e) {
             if (e.which == 13) {
-                var href=$("#goto_client").attr("href");
-                window.location.href=href;
+                goto_client();
                 event.preventDefault();
             }
         });
 
+        var tims=6;
+        var timer=setInterval(function () {
+            tims--;
+            if (parseInt(tims)<1){
+                clearInterval(timer);
+                goto_client();
+            }else {
+                layer.msg(tims+"秒后即将进入客户端...",{ icon: 16,offset: 't'})
+            }
+
+        },1000)
+
+
+
+
+        function goto_client() {
+            var href=$("#goto_client").attr("href");
+            if (isNotEmpty(href)){
+                window.location.href=href;
+                var loadindex = layer.msg("准备进入客户端...", {
+                    icon: 16,
+                    time:10000,
+                    shade: [0.1,"#fff"],
+                });
+            } else {
+                layer.msg("系统异常，请联系管理员");
+            }
+
+        }
+
+        function goto_zk() {
+            var href=$("#goto_zk").attr("href");
+            if (isNotEmpty(href)){
+                window.location.href=href;
+                var loadindex = layer.msg("准备进入总控系统...", {
+                    icon: 16,
+                    time:10000,
+                    shade: [0.1,"#fff"],
+                });
+            }else {
+                layer.msg("系统异常，请联系管理员");
+            }
+
+        }
     });
 
 
