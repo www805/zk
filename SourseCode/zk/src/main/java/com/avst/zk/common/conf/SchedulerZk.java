@@ -23,7 +23,7 @@ public class SchedulerZk {
      * 2分钟跳一次
      * 0 0/1 * * * ?
      */
-    @Scheduled(cron = "0 0/2 * * * ? ")
+    @Scheduled(cron = "0 0/1 * * * ? ")
     public void testTasks() {
         //清空缓存
 //        ControlCache.delControlInfoList("list");
@@ -32,12 +32,12 @@ public class SchedulerZk {
             for (ControlInfoParamVO paramVO : list) {
                 //判断时间如果2分钟没连接就设置为断线状态
                 int i = calLastedTime(paramVO.getLasttime());
-                if (i >= 180) {
+                if (i >= 60) {
                     paramVO.setStatus(0);
                 }
             }
         }
-        LogUtil.intoLog("检测所有服务心跳，如果3分钟没上报，状态设置为断开");
+        LogUtil.intoLog("检测所有服务心跳，如果1分钟没上报，状态设置为断开");
 //        System.out.println("设置服务状态为断开");
     }
 

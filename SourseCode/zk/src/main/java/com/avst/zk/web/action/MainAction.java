@@ -65,12 +65,24 @@ public class MainAction extends BaseAction {
         return result;
     }
 
+    /**
+     * 获取服务器状态
+     * @return
+     */
+    @RequestMapping("/getServerStatus")
+    @ResponseBody
+    public  RResult getServerStatus(){
+        RResult result=this.createNewResultOfFail();
+        mainService.getServerStatus(result);
+        result.setEndtime(DateUtil.getDateAndMinute());
+        return result;
+    }
+
     @PostMapping(value = "/logining")
     @ResponseBody
     public RResult checklogin(Model model, HttpServletRequest request, LoginParam loginParam) {
         RResult result=createNewResultOfFail();
         mainService.logining(result,request,loginParam);
-        AppCache.delAppCacheParam();
         result.setEndtime(DateUtil.getDateAndMinute());
         return result;
     }

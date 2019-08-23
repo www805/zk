@@ -3,29 +3,36 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title id="topTitle" th:text="${title}">欢迎登录总控管理系统</title>
+    <link rel="stylesheet" href="/layui/css/layui.css">
     <style type="text/css">
         .openbox{
             width:600px;
             height:300px;
             margin: auto;
             background-image:url(/uimaker/images/zk_loginbg2.png); background-repeat:no-repeat; background-size:100% 100%;
-            margin-top:2%;
+            position:relative
         }
         .openbox2{
             width:200px;
             height:120px;
             margin: auto;
             background-image:url(/uimaker/images/zk_loginbg3.png); background-repeat:no-repeat; background-size:100% 100%;
-            margin-top: 8%;
+            margin-top: 6%;
+            margin-bottom: 20px;
         }
         .client_button{
             width: 250px;height: 100px;margin: 0 auto;color: #FFFFFF;text-align:center;line-height: 100px;font-size: 24px;
             background-image:url(/uimaker/images/zk_loginbtn2.png);
             background-size:100% 100%;
+            margin-top: 55px;
         }
         .zk_button{
-            width: 100px;height: 25px;color:#fff;text-align:center;line-height: 24px;position: absolute;right: 0;top: 75px; background-image:url(/uimaker/images/zk_loginbtn1.png);
+            width: 100px;height: 25px;color:#fff;text-align:center;line-height: 24px;
+            background-image:url(/uimaker/images/zk_loginbtn1.png);
             background-size:100% 100%;
+            position: absolute;
+            right: 0px;
+            top: 70px;
         }
         .client_button:hover {
             box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
@@ -39,11 +46,29 @@
             background-attachment: fixed;
             width: 100%;
             height: 100%;
-            position: fixed;
-            top:0;
-            left:0;
-            right:0;
-            bottom:0;
+            margin: 0;
+            padding: 0;
+        }
+        .success {
+            background-color: #5FB878;
+            color: #fff;
+            font-size: 14px;
+            padding: 2px 6px;
+        }
+        .error{
+            background-color: #FF5722;
+            color: #fff;
+            padding: 2px 6px;
+            font-size: 14px;
+            margin-right: 6px;
+        }
+        .detection{
+            color: #fff;
+            font-size:16px;
+            margin-bottom: 10px;
+        }
+        .zk_h2{
+            text-align: center;font-size: 30px;color: #fff;padding-top: 15px;font-weight:bold;
         }
     </style>
 </head>
@@ -52,25 +77,37 @@
 
    <div class="openbox2" ></div>
     <div class="openbox" >
-        <h2 style="text-align: center;font-size: 30px;margin: 20px 0 50px 0;color: #fff" th:text="${title}">欢迎进入智能笔录系统引导页面</h2>
-        <a onclick="goto_zk();" th:href="${zk_button_url}" title="点击进入总控系统" id="goto_zk" style="">
+        <h2 class="zk_h2" th:text="${title}">欢迎进入智能笔录系统引导页面</h2>
+        <a href="javascript:;" onclick="goto_zk();"th:value="${zk_button_url}" title="点击进入总控系统" id="goto_zk">
             <div class="zk_button"></div>
         </a>
-        <a   onclick="goto_client();"  th:href="${client_button_url}" id="goto_client" title="点击进入客户端" >
+        <a href="javascript:;" onclick="goto_client();"th:value="${client_button_url}" id="goto_client" title="点击进入客户端" >
             <div class="client_button"></div>
         </a>
     </div>
+    <div style="width:580px;height:100px;margin: auto;background-color: #2F4056;padding: 15px 0 5px 20px;">
+        <div style="width: 260px;margin: 0 auto;">
+            <p class="detection">笔录客户端：<span  class="error" id="trm">连接中</span><img id="trm_upload" src="/uimaker/images/upload.gif" alt="upload"/></p>
+            <p class="detection">设备系统：<span  class="error" id="ec">连接中</span><img id="ec_upload" src="/uimaker/images/upload.gif" alt="upload"/></p>
+            <p class="detection">会议系统：<span  class="error" id="mc">连接中</span><img id="mc_upload" src="/uimaker/images/upload.gif" alt="upload"/></p>
+        </div>
+    </div>
 
 
-    <div th:replace="footer :: footer">...</div>
+
 </body>
-<script th:src="@{/js/login.js}" type="text/javascript"></script>
+<script th:src="@{/js/jquery-1.11.1.js}" type="text/javascript"></script>
+<script th:src="@{/js/common.js}" type="text/javascript"></script>
+<script th:src="@{/js/url.js}" type="text/javascript"></script>
+<script th:src="@{/js/zk/guidepage.js}" type="text/javascript"></script>
+<script th:src="@{/layui/layui.js}"type="text/javascript"></script>
+<script th:src="@{/layui/lay/modules/laytpl.js}" type="text/javascript"></script>
 <script th:inline="javascript">
     $(function(){
-       $('.openbox').css({'position':'absolute','left':($(window).width()-600)/2});
-        $(window).resize(function(){
-            $('.openbox').css({'position':'absolute','left':($(window).width()-600)/2});
-        })
+       // $('.openbox').css({'position':'absolute','left':($(window).width()-600)/2});
+       //  $(window).resize(function(){
+       //      $('.openbox').css({'position':'absolute','left':($(window).width()-600)/2});
+       //  })
 
         //回车跳转
         $(document).keypress(function (e) {
@@ -81,52 +118,67 @@
         });
 
         var tims=6;
-        var timer=setInterval(function () {
-            tims--;
-            if (parseInt(tims)<1){
-                clearInterval(timer);
-                goto_client();
-            }else {
-                layer.msg(tims+"秒后即将进入客户端...",{ icon: 16,offset: 't'})
+        var timer = setInterval(function () {
+            if(tem_status == 1){
+                tims--;
+                if (parseInt(tims) < 1) {
+                    clearInterval(timer);
+                    goto_client();
+                } else {
+                    layer.msg(tims + "秒后即将进入客户端...", {icon: 16, offset: 't'})
+                }
             }
 
-        },1000)
+        }, 1000);
+
+        getServerStatus();
+        setInterval(function() {
+            getServerStatus();
+        },5000);
 
 
 
-
-        function goto_client() {
-            var href=$("#goto_client").attr("href");
-            if (isNotEmpty(href)){
-                window.location.href=href;
-                var loadindex = layer.msg("准备进入客户端...", {
-                    icon: 16,
-                    time:10000,
-                    shade: [0.1,"#fff"],
-                });
-            } else {
-                layer.msg("系统异常，请联系管理员");
-            }
-
-        }
-
-        function goto_zk() {
-            var href=$("#goto_zk").attr("href");
-            if (isNotEmpty(href)){
-                window.location.href=href;
-                var loadindex = layer.msg("准备进入总控系统...", {
-                    icon: 16,
-                    time:10000,
-                    shade: [0.1,"#fff"],
-                });
-            }else {
-                layer.msg("系统异常，请联系管理员");
-            }
-
-        }
     });
 
+    function goto_client() {
+        if(tem_status != 1){
+            layer.msg("客户端尚未启动成功，不能进入", {icon: 2});
+            return ;
+        }
+        var href=$("#goto_client").attr("value");
+        if (isNotEmpty(href)){
+            window.location.href=href;
+            var loadindex = layer.msg("准备进入客户端...", {
+                icon: 16,
+                time:10000,
+                shade: [0.1,"#fff"],
+            });
+        } else {
+            layer.msg("系统异常，请联系管理员");
+        }
 
+    }
+
+    function goto_zk() {
+        var href=$("#goto_zk").attr("value");
+        if (isNotEmpty(href)){
+            window.location.href=href;
+            var loadindex = layer.msg("准备进入总控系统...", {
+                icon: 16,
+                time:10000,
+                shade: [0.1,"#fff"],
+            });
+        }else {
+            layer.msg("系统异常，请联系管理员");
+        }
+
+    }
+
+    layui.use(['layer','element'], function(){
+        var layer = layui.layer; //获得layer模块
+        var element = layui.element;
+        //使用模块
+    });
 
 </script>
 

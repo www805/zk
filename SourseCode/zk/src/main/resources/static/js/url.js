@@ -35,7 +35,9 @@ function getUrl_manage() {
 
 		ZKcontrolList:getPath()+basepath+"zk/getControlInfoAll",
 
-		getNavList:getPath()+basepath+"main/getNavList"
+		getNavList:getPath()+basepath+"main/getNavList",
+
+		getServerStatus:getPath()+basepath+"main/getServerStatus"
 	};
 }
 
