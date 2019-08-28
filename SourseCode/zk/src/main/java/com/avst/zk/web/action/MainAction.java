@@ -6,6 +6,7 @@ import com.avst.zk.common.cache.param.AppCacheParam;
 import com.avst.zk.common.conf.Constant;
 import com.avst.zk.common.conf.UserCache;
 import com.avst.zk.common.util.DateUtil;
+import com.avst.zk.common.util.LogUtil;
 import com.avst.zk.common.util.NetTool;
 import com.avst.zk.common.util.baseaction.BaseAction;
 import com.avst.zk.common.util.baseaction.RResult;
@@ -163,6 +164,8 @@ public class MainAction extends BaseAction {
             }else{
                 zk_button_url = "http://" + hostAddress + ":8079" + zk_button_url;
             }
+        }else{
+            LogUtil.intoLog(4, this.getClass(), "外部配置文件读取出错！！！！" );
         }
 
         model.addAttribute("title",title);
