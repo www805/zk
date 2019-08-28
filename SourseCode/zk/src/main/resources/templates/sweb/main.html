@@ -71,18 +71,24 @@
             <!--</li>-->
         </ul>
         <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item">
-                <a href="javascript:;" >
-                    <img src="/uimaker/images/login_logo.png" class="layui-nav-img">
-                    <span th:text="${mainModel.username}">管理员</span>
-                </a>
-            </li>
-            <li class="layui-nav-item">
+            <!--<li class="layui-nav-item">-->
+                <!--<a href="javascript:;" >-->
+                    <!--<img src="/uimaker/images/login_logo.png" class="layui-nav-img">-->
+                    <!--<span th:text="${mainModel.username}">管理员</span>-->
+                <!--</a>-->
+            <!--</li>-->
+            <!--<li class="layui-nav-item">-->
                 <!--<a target="option" th:href="@{/cweb/base/main/gotoupdateServerconfig}">-->
                     <!--<i class="layui-icon layui-icon-set-fill"></i>-->
                 <!--</a>-->
+            <!--</li>-->
+            <!--<li class="layui-nav-item"><a href="javascript:;" onclick="login_logout();">退出</a></li>-->
+            <li class="layui-nav-item">
+                <a href="http://localhost:8079/main/goguidepage" >
+                    <i class="layui-icon layui-icon-flag" style="font-size: 20px;"></i>
+                    <span>引导页</span>
+                </a>
             </li>
-            <li class="layui-nav-item"><a href="javascript:;" onclick="login_logout();">退出</a></li>
         </ul>
     </div>
 

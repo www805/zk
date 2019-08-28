@@ -78,7 +78,7 @@ function callLogout(data){
     if(null!=data&&data.actioncode=='SUCCESS'){
         //alert(data.message);
         var url=getUrl_manage().gotologin;
-        window.location.href=url;
+        window.location.href="/";
     }else{
         // alert(data.message);
         layer.msg(data.message, {time: 5000, icon:6});

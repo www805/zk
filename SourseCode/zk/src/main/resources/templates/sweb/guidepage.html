@@ -65,7 +65,6 @@
         .detection{
             color: #fff;
             font-size:16px;
-            margin-bottom: 10px;
         }
         .zk_h2{
             text-align: center;font-size: 30px;color: #fff;padding-top: 15px;font-weight:bold;
@@ -86,10 +85,21 @@
         </a>
     </div>
     <div style="width:580px;height:100px;margin: auto;background-color: #2F4056;padding: 15px 0 5px 20px;">
-        <div style="width: 260px;margin: 0 auto;">
-            <p class="detection">笔录客户端：<span  class="error" id="trm">连接中</span><img id="trm_upload" src="/uimaker/images/upload.gif" alt="upload"/></p>
-            <p class="detection">设备系统：<span  class="error" id="ec">连接中</span><img id="ec_upload" src="/uimaker/images/upload.gif" alt="upload"/></p>
-            <p class="detection">会议系统：<span  class="error" id="mc">连接中</span><img id="mc_upload" src="/uimaker/images/upload.gif" alt="upload"/></p>
+        <div style="width: 260px;margin: 0 auto;" id="serverStatus">
+            <table border="0" height="90">
+                <tr>
+                    <td align="right" class="detection">笔录客户端：</td>
+                    <td><span  class="error" id="trm">连接中</span><img id="trm_upload" src="/uimaker/images/upload.gif" alt="upload"/></td>
+                </tr>
+                <tr>
+                    <td align="right" class="detection">设备系统：</td>
+                    <td><span  class="error" id="ec">连接中</span><img id="ec_upload" src="/uimaker/images/upload.gif" alt="upload"/></td>
+                </tr>
+                <tr>
+                    <td align="right" class="detection">会议系统：</td>
+                    <td><span  class="error" id="mc">连接中</span><img id="mc_upload" src="/uimaker/images/upload.gif" alt="upload"/></td>
+                </tr>
+            </table>
         </div>
     </div>
 
@@ -128,7 +138,6 @@
                     layer.msg(tims + "秒后即将进入客户端...", {icon: 16, offset: 't'})
                 }
             }
-
         }, 1000);
 
         getServerStatus();

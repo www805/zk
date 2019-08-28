@@ -32,12 +32,12 @@ public class SchedulerZk {
             for (ControlInfoParamVO paramVO : list) {
                 //判断时间如果2分钟没连接就设置为断线状态
                 int i = calLastedTime(paramVO.getLasttime());
-                if (i >= 60) {
+                if (i >= 120) {
                     paramVO.setStatus(0);
                 }
             }
         }
-        LogUtil.intoLog("检测所有服务心跳，如果1分钟没上报，状态设置为断开");
+        LogUtil.intoLog("检测所有服务心跳，如果2分钟没上报，状态设置为断开");
 //        System.out.println("设置服务状态为断开");
     }
 

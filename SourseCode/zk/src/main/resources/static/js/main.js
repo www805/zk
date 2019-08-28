@@ -5,9 +5,10 @@ var loadIndex;
 //检测服务器是否是连接状态
 function ServerCheck(obj){
 
-    loadIndex = layer.load(1, {
-        shade: [0.1,'#fff'] //0.1透明度的白色背景
-        ,title:"加载中，请稍后..."
+    loadIndex = layer.msg("加载中，请稍后...", {
+        icon: 16,
+        time:10000,
+        shade: [0.1,"#fff"],
     });
 
     urlDizhi = obj.title;
@@ -110,8 +111,6 @@ function callControl(data){
 }
 function callServerCheck(data){
 
-    layer.close(loadIndex);//关闭load特效
-
     if(null!=data&&data.actioncode=='SUCCESS'){
         //alert(data.message);
 
@@ -131,9 +130,11 @@ function callServerCheck(data){
                     loginaccount = ControlInfoParamVO.loginusername;
                     adminpassword = ControlInfoParamVO.loginpassword;
                     document.getElementById('optionZK').src = urlDizhi;
+                    layer.close(loadIndex);//关闭load特效
                     return;
                 }
             }
+
         }
 
         layer.msg(ServerOut + "服务器尚未连接或已断开，暂不能访问", {time: 5000, icon: 2});

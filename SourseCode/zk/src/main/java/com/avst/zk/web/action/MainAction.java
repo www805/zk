@@ -6,6 +6,7 @@ import com.avst.zk.common.cache.param.AppCacheParam;
 import com.avst.zk.common.conf.Constant;
 import com.avst.zk.common.conf.UserCache;
 import com.avst.zk.common.util.DateUtil;
+import com.avst.zk.common.util.NetTool;
 import com.avst.zk.common.util.baseaction.BaseAction;
 import com.avst.zk.common.util.baseaction.RResult;
 import com.avst.zk.web.req.LoginParam;
@@ -150,6 +151,18 @@ public class MainAction extends BaseAction {
             client_button_url = (String) client_button.get("url");
             zk_button_title = (String) zk_button.get("title");
             zk_button_url = (String) zk_button.get("url");
+
+            //获取本机ip地址
+            String hostAddress = NetTool.getMyIP();
+            if(StringUtils.isBlank(hostAddress)){
+                hostAddress = "localhost";
+            }
+
+            if(StringUtils.isBlank(zk_button_url)){
+                zk_button_url = "http://" + hostAddress + ":8079/main/gotologin/";
+            }else{
+                zk_button_url = "http://" + hostAddress + ":8079" + zk_button_url;
+            }
         }
 
         model.addAttribute("title",title);
