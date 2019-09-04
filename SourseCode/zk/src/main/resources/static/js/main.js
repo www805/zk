@@ -41,17 +41,27 @@ function callgetNavList(data) {
         if (isNotEmpty(data.data)) {
             var appCache = data.data;
 
-            //页头
-            var Top_Title = appCache.data.title;
-            $("#topTitle").html(Top_Title);
-            $("#spanTitle").html(Top_Title);
+            if (isNotEmpty(appCache.data.title)) {
+                //页头
+                var Top_Title = appCache.data.title;
+                $("#topTitle").html(Top_Title);
+                $("#spanTitle").html(Top_Title);
+            }
 
-            //页脚
-            var bottom_name = appCache.data.bottom.name;
-            var bottom_declaration = appCache.data.bottom.declaration;
-            var bottom_url = appCache.data.bottom.url;
-            var bottom_html = bottom_declaration + " <a href=\"" + bottom_url + "\">" + bottom_name + "</a>";
-            $("#bottom_mian").html(bottom_html);
+            if (isNotEmpty(appCache.data.bottom)) {
+                //页脚
+                var bottom_name = appCache.data.bottom.name;
+                var bottom_declaration = appCache.data.bottom.declaration;
+                var bottom_url = appCache.data.bottom.url;
+                var bottom_html = bottom_declaration + " <a href=\"" + bottom_url + "\">" + bottom_name + "</a>";
+                $("#bottom_mian").html(bottom_html);
+            }
+
+            if (isNotEmpty(appCache.data.guidepageUrl)) {
+                //设置引导页地址 guidepage
+                $("#guidepage").attr("href", appCache.data.guidepageUrl);
+            }
+
         }
         layui.use('element', function(){
             var element =  layui.element;
@@ -130,7 +140,7 @@ function callServerCheck(data){
                     loginaccount = ControlInfoParamVO.loginusername;
                     adminpassword = ControlInfoParamVO.loginpassword;
                     document.getElementById('optionZK').src = urlDizhi;
-                    layer.close(loadIndex);//关闭load特效
+                    //layer.close(loadIndex);//关闭load特效
                     return;
                 }
             }

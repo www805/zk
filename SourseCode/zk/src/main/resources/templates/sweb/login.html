@@ -52,6 +52,13 @@
             $('.loginbox').css({'position':'absolute','left':($(window).width()-692)/2});
         })
         getNavList();
+        document.onkeydown = function (event) {
+            var e = event || window.event;
+            if (e && e.keyCode == 13) { //回车键的键值为13
+                event.preventDefault();
+                login_login();
+            }
+        };
     });
 </script>
 

@@ -54,6 +54,7 @@ public class SchedulerZk {
         }
 
         long b = parse.getTime();
-        int c = (int)((a - b) / 1000);return c;
+        int c = (int)((a - b) / 1000);
+        return c;
     }
 }

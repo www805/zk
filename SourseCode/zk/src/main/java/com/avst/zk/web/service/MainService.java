@@ -6,6 +6,7 @@ import com.avst.zk.common.cache.param.AppCacheParam;
 import com.avst.zk.common.conf.Constant;
 import com.avst.zk.common.conf.UserCache;
 import com.avst.zk.common.util.LogUtil;
+import com.avst.zk.common.util.NetTool;
 import com.avst.zk.common.util.OpenUtil;
 import com.avst.zk.common.util.baseaction.RResult;
 import com.avst.zk.common.util.baseaction.ReqParam;
@@ -13,6 +14,7 @@ import com.avst.zk.feignclient.trm.TrmControl;
 import com.avst.zk.feignclient.trm.req.UserloginParam;
 import com.avst.zk.outside.interfacetoout.v1.service.ControlInfoService;
 import com.avst.zk.web.req.LoginParam;
+import com.avst.zk.web.vo.GoguidepageVO;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -67,32 +69,6 @@ public class MainService {
         /**把账号存到缓存里面**/
         UserCache.setUserCache(loginParam);
 
-
-//        try {
-//            //把账号密码放到参数内
-//            UserloginParam userloginParam = new UserloginParam();
-//            userloginParam.setLoginaccount(loginParam.getLoginaccount());
-//            userloginParam.setPassword(loginParam.getPassword());
-//
-//            ReqParam<UserloginParam> reqParam = new ReqParam();
-//            reqParam.setParam(userloginParam);
-//
-//            //远程请求登录
-//            RResult loginResult = trmControl.getLoginUser(reqParam);
-//
-//            if ("SUCCESS".equalsIgnoreCase(loginResult.getActioncode())) {
-//                result.changeToTrue();
-////              request.getSession().setAttribute(Constant.MANAGE_USER, loginParam);
-//                //把账号存到缓存里面
-//                UserCache.setUserCache(loginParam);
-//            }else{
-//                result.setMessage(loginResult.getMessage());
-//            }
-//        } catch (Exception e) {
-//            result.setMessage("远程登录请求失败，请启动业务系统后重试");
-//            LogUtil.intoLog(4,this.getClass(),"logining TrmControl。run 远程登录，请求失败");
-//        }
-
         return result;
     }
 
@@ -112,6 +88,14 @@ public class MainService {
                 if (null != map && map.size() > 0) {
                     cacheParam.setTitle((String) avstYml.get("title"));
                 }
+
+                //拼接引导页url
+                String myIP = NetTool.getMyIP();
+                Map<String, Object> guidepaMap = (Map<String, Object>) avstYml.get("guidepage");
+                String url = (String) guidepaMap.get("url");
+                url = "http://" + myIP + url;
+                avstYml.put("guidepageUrl", url);
+
                 cacheParam.setData(avstYml);
 
             } catch (IOException e) {
@@ -133,5 +117,56 @@ public class MainService {
 
     public void getServerStatus(RResult result) {
         controlInfoService.getControlInfo(result);
+    }
+
+
+    public GoguidepageVO goguidepage(RResult result) {
+
+        AppCacheParam cacheParam = AppCache.getAppCacheParam();
+        if (StringUtils.isBlank(cacheParam.getTitle()) || null == cacheParam.getData()) {
+            this.getNavList(result);
+            cacheParam = AppCache.getAppCacheParam();
+        }
+        Map<String, Object> map = cacheParam.getData();
+
+        String title = "";
+        String client_button_title = "";
+        String client_button_url = "";
+        String zk_button_title = "";
+        String zk_button_url = "";
+        if (null != map) {
+            Map<String, Object> guidepagemap = (Map<String, Object>) map.get("guidepage");
+            Map<String, Object> client_button = (Map<String, Object>) guidepagemap.get("client_button");
+            Map<String, Object> zk_button = (Map<String, Object>) guidepagemap.get("zk_button");
+
+            title = (String) guidepagemap.get("title");
+            client_button_title = (String) client_button.get("title");
+            client_button_url = (String) client_button.get("url");
+            zk_button_title = (String) zk_button.get("title");
+            zk_button_url = (String) zk_button.get("url");
+
+            //获取本机ip地址
+            String hostAddress = NetTool.getMyIP();
+            if(StringUtils.isBlank(hostAddress)){
+                hostAddress = "localhost";
+            }
+
+            if(StringUtils.isBlank(zk_button_url)){
+                zk_button_url = "http://" + hostAddress + ":8079/main/gotologin/";
+            }else{
+                zk_button_url = "http://" + hostAddress + ":8079" + zk_button_url;
+            }
+        }else{
+            LogUtil.intoLog(4, this.getClass(), "外部配置文件读取出错！！！！" );
+        }
+
+        GoguidepageVO goguidepageVO = new GoguidepageVO();
+        goguidepageVO.setTitle(title);
+        goguidepageVO.setClient_button_title(client_button_title);
+        goguidepageVO.setClient_button_url(client_button_url);
+        goguidepageVO.setZk_button_title(zk_button_title);
+        goguidepageVO.setZk_button_url(zk_button_url);
+
+        return goguidepageVO;
     }
 }

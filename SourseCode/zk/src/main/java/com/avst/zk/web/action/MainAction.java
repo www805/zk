@@ -12,6 +12,7 @@ import com.avst.zk.common.util.baseaction.BaseAction;
 import com.avst.zk.common.util.baseaction.RResult;
 import com.avst.zk.web.req.LoginParam;
 import com.avst.zk.web.service.MainService;
+import com.avst.zk.web.vo.GoguidepageVO;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -130,49 +131,14 @@ public class MainAction extends BaseAction {
 
     @RequestMapping(value = "/goguidepage")
     public ModelAndView goguidepage(Model model){
-        AppCacheParam cacheParam = AppCache.getAppCacheParam();
-        if (StringUtils.isBlank(cacheParam.getTitle()) || null == cacheParam.getData()) {
-            this.getNavList();
-            cacheParam = AppCache.getAppCacheParam();
-        }
-        Map<String, Object> map = cacheParam.getData();
+        RResult result=this.createNewResultOfFail();
+        GoguidepageVO goguidepageVO = mainService.goguidepage(result);
 
-        String title = "";
-        String client_button_title = "";
-        String client_button_url = "";
-        String zk_button_title = "";
-        String zk_button_url = "";
-        if (null != map) {
-            Map<String, Object> guidepagemap = (Map<String, Object>) map.get("guidepage");
-            Map<String, Object> client_button = (Map<String, Object>) guidepagemap.get("client_button");
-            Map<String, Object> zk_button = (Map<String, Object>) guidepagemap.get("zk_button");
-
-            title = (String) guidepagemap.get("title");
-            client_button_title = (String) client_button.get("title");
-            client_button_url = (String) client_button.get("url");
-            zk_button_title = (String) zk_button.get("title");
-            zk_button_url = (String) zk_button.get("url");
-
-            //获取本机ip地址
-            String hostAddress = NetTool.getMyIP();
-            if(StringUtils.isBlank(hostAddress)){
-                hostAddress = "localhost";
-            }
-
-            if(StringUtils.isBlank(zk_button_url)){
-                zk_button_url = "http://" + hostAddress + ":8079/main/gotologin/";
-            }else{
-                zk_button_url = "http://" + hostAddress + ":8079" + zk_button_url;
-            }
-        }else{
-            LogUtil.intoLog(4, this.getClass(), "外部配置文件读取出错！！！！" );
-        }
-
-        model.addAttribute("title",title);
-        model.addAttribute("client_button_title",client_button_title);
-        model.addAttribute("client_button_url",client_button_url);
-        model.addAttribute("zk_button_title",zk_button_title);
-        model.addAttribute("zk_button_url",zk_button_url);
+        model.addAttribute("title",goguidepageVO.getTitle());
+        model.addAttribute("client_button_title",goguidepageVO.getClient_button_title());
+        model.addAttribute("client_button_url",goguidepageVO.getClient_button_url());
+        model.addAttribute("zk_button_title",goguidepageVO.getZk_button_title());
+        model.addAttribute("zk_button_url",goguidepageVO.getZk_button_url());
         return  new ModelAndView("sweb/guidepage","goguidepageModel", model);
     }
 
