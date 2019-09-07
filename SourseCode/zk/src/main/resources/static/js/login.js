@@ -52,6 +52,11 @@ function callgetNavList(data) {
                 $("#spanTitle").html(Top_Title);
             }
 
+            if (isNotEmpty(appCache.data.guidepageUrl)) {
+                //设置引导页地址 guidepage
+                $("#guidepage").attr("href", appCache.data.guidepageUrl);
+            }
+
             if (isNotEmpty(appCache.data.bottom)) {
                 if (!isNotEmpty(appCache.data.bottom) || !isNotEmpty(appCache.data.bottom.name) || !isNotEmpty(appCache.data.bottom.declaration) || !isNotEmpty(appCache.data.bottom.url)) {
                     return;
@@ -63,6 +68,7 @@ function callgetNavList(data) {
                 var bottom_html = bottom_declaration + " <a href=\"" + bottom_url + "\">" + bottom_name + "</a>";
                 $("#bottom_mian").html(bottom_html);
             }
+
         }
         layui.use('element', function(){
             var element =  layui.element;
