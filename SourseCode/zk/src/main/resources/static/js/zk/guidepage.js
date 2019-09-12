@@ -55,4 +55,36 @@ function callgetServerStatus(data){
 }
 
 
+function getNavList() {
+    var url=getUrl_manage().getNavList;
+    ajaxSubmitByJson(url,null,callgetNavList);
+}
 
+function callgetNavList(data) {
+    if(null!=data&&data.actioncode=='SUCCESS'){
+
+        if (isNotEmpty(data.data.data)) {
+            var appCache = data.data;
+
+            if(isNotEmpty(appCache.data.guidepage.img.src)){
+                $(".openbox2").css({"background-image": "url(" + appCache.data.guidepage.img.src + ")"});
+                if(isNotEmpty(appCache.data.guidepage.img.width)){
+                    $(".openbox2").css("width", appCache.data.guidepage.img.width);
+                }
+                if(isNotEmpty(appCache.data.guidepage.img.height)){
+                    $(".openbox2").css("height", appCache.data.guidepage.img.height);
+                }
+                if(isNotEmpty(appCache.data.guidepage.img.span)){
+                    $(".openbox2").css("margin-bottom", appCache.data.guidepage.img.span);
+                }
+            }
+
+        }
+        layui.use('element', function(){
+            var element =  layui.element;
+            element.render();
+        });
+    }else{
+        layer.msg(data.message);
+    }
+}
