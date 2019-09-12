@@ -4,6 +4,22 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title id="topTitle" th:text="${title}">欢迎登录总控管理系统</title>
 <link href="/uimaker/css/style.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="/layui/css/layui.css">
+    <style type="text/css">
+        .layui-form-checked[lay-skin=primary] i{
+            border-color:#597FC0 !important;
+            background-color:#FFF !important;
+            color:#597FC0 !important;
+            font-weight: bold;
+        }
+        .layui-form-checkbox[lay-skin=primary]:hover i{
+            border-color:#597FC0 !important;
+        }
+        .layui-form-radio>i:hover, .layui-form-radioed>i{
+            color: #597FC0 !important;
+        }
+
+    </style>
 </head>
 
 <body style="background-color:#1c77ac; background-image:url(/uimaker/images/light.png); background-repeat:no-repeat; background-position:center top; overflow:hidden;">
@@ -26,23 +42,29 @@
     <span class="systemlogo"></span>
 
     <div class="loginbox">
-
+        <form class="layui-form" action="">
         <ul>
-            <li><input name="loginaccount" type="text" class="loginuser" value="" onclick="JavaScript:this.value=''"/></li>
-            <li><input name="password" type="password" class="loginpwd" value="" onclick="JavaScript:this.value=''"/></li>
-            <li><input type="button" class="loginbtn" value="登录" onclick="login_login();" /><label><input name="" type="checkbox" value="" checked="checked" />记住密码</label><label><a href="#">忘记密码？</a></label></li>
+            <li><input name="loginaccount" type="text" class="loginuser" value="" lay-verify="loginaccount"/></li>
+            <li><input name="password" type="password" class="loginpwd" value="" lay-verify="password"/></li>
+            <li><input type="button" id="loginbtn" class="loginbtn" value="登录"  lay-submit="" lay-filter="loginbtn" style="margin-right: 10px;" />
+                <input name="" type="checkbox" title="记住密码"  lay-skin="primary"/>
+                <a href="#" style="color: #666;font-size: 14px;position: relative;top: 2px;">忘记密码？</a>
+            </li>
         </ul>
-
+        </form>
     </div>
     <!--onclick="javascript:window.location='main.html'"  -->
     </div>
 
 
 
-    <div id="bottom_mian" class="loginbm">总控管理系统</div>
+    <div id="bottom_mian" class="loginbm"></div>
 
     <div th:replace="footer :: footer">...</div>
 </body>
+
+<script th:src="@{/js/jquery-1.11.1.js}" type="text/javascript"></script>
+<script th:src="@{/layui/layui.js}"type="text/javascript"></script>
 <script th:src="@{/js/login.js}" type="text/javascript"></script>
 <script src="/js/canvas-nest.js" type="text/javascript"></script>
 <script th:inline="javascript">
@@ -56,9 +78,39 @@
             var e = event || window.event;
             if (e && e.keyCode == 13) { //回车键的键值为13
                 event.preventDefault();
-                login_login();
+                $("#loginbtn").click();
             }
         };
+
+        layui.use('form', function(){
+            var form = layui.form;
+            form.render();
+
+            form.verify({
+                loginaccount:function (value) {
+                    if (!(/\S/).test(value)) {
+                        return "请输入登录账号";
+                    }
+                    if (!(/^(?!.*\s).{5,12}$/.test(value))) {
+                        return "请输入5-12个字符不含空格的登录账号";
+                    }
+                },
+                password:function (value) {
+                    if (!(/\S/).test(value)) {
+                        return "请输入密码";
+                    }
+                }
+            });
+
+            // 监听提交
+            form.on('submit(loginbtn)', function(data){
+
+                if(isNotEmpty(data.field.loginaccount) && isNotEmpty(data.field.password)){
+                    login_login();
+                }
+                return false;
+            });
+        });
     });
 </script>
 
