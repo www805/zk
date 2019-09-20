@@ -152,16 +152,15 @@
     });
 
     function goto_client() {
-        if (isNotEmpty(timer)){
-            clearInterval(timer);
-        }
-
         if(tem_status != 1){
             layer.msg("客户端尚未启动成功，不能进入", {icon: 2});
             return ;
         }
         var href=$("#goto_client").attr("value");
         if (isNotEmpty(href)){
+            if (isNotEmpty(timer)){
+                clearInterval(timer);
+            }
             window.location.href=href;
             var loadindex = layer.msg("准备进入客户端...", {
                 icon: 16,
@@ -175,11 +174,11 @@
     }
 
     function goto_zk() {
-        if (isNotEmpty(timer)){
-            clearInterval(timer);
-        }
         var href=$("#goto_zk").attr("value");
         if (isNotEmpty(href)){
+            if (isNotEmpty(timer)){
+                clearInterval(timer);
+            }
             window.location.href=href;
             var loadindex = layer.msg("准备进入总控系统...", {
                 icon: 16,
