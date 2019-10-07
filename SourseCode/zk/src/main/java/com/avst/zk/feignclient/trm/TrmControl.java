@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 
-@FeignClient(value="trm",url="localhost:8080/")
+@FeignClient(value="trm")
 public interface TrmControl {
 
     //提供给总控的登录账号密码
