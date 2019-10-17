@@ -92,7 +92,8 @@ public class MainService {
                 //拼接引导页url
                 String myIP = NetTool.getMyIP();
                 Map<String, Object> guidepaMap = (Map<String, Object>) avstYml.get("guidepage");
-                String url = (String) guidepaMap.get("url");
+                Map<String, Object> client_buttonMap = (Map<String, Object>) guidepaMap.get("client_button");
+                String url = (String) client_buttonMap.get("url");
                 url = "http://" + myIP + url;
                 avstYml.put("guidepageUrl", url);
 
