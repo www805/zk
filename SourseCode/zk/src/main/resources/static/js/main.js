@@ -55,12 +55,12 @@ function callgetNavList(data) {
                 var bottom_declaration = appCache.data.bottom.declaration;
                 var bottom_url = appCache.data.bottom.url;
 
-                if (isNotEmpty(appCache.data.bottom.img.src) && appCache.data.bottom.img.src != '/') {
-                    $(".layui-footer").css("height", "50px").css("line-height", "52px");
-                    bottom_html = " <a href=\"" + bottom_url + "\">" + "<img width='" + appCache.data.bottom.img.width + "' height='" + appCache.data.bottom.img.height + "' src='" + appCache.data.bottom.img.src + "'>" + "</a>";
-                } else {
-                    bottom_html = bottom_declaration + " <a href=\"" + bottom_url + "\">" + bottom_name + "</a>";
-                }
+                // if (isNotEmpty(appCache.data.bottom.image.src) && appCache.data.bottom.image.src != '/') {
+                //     $(".layui-footer").css("height", "50px").css("line-height", "52px");
+                //     bottom_html = " <a href=\"" + bottom_url + "\">" + "<img width='" + appCache.data.bottom.image.width + "' height='" + appCache.data.bottom.image.height + "' src='" + appCache.data.bottom.image.src + "'>" + "</a>";
+                // } else {
+                // }
+                bottom_html = bottom_declaration + " <a href=\"" + bottom_url + "\">" + bottom_name + "</a>";
                 $("#bottom_mian").html(bottom_html);
             }
 
@@ -105,6 +105,10 @@ function callControl(data){
                 //连接成功的时候删除
                 if (status == 1) {
                     spanState = "<span style='background-color:#5FB878;' class=\"layui-badge \"";
+                }
+
+                if (servername == "zk") {
+                    continue;
                 }
 
                 //配置到列表里面
