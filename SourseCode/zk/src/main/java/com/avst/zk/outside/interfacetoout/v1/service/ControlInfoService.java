@@ -1,5 +1,7 @@
 package com.avst.zk.outside.interfacetoout.v1.service;
 
+import com.avst.zk.common.cache.AppCache;
+import com.avst.zk.common.cache.param.AppCacheParam;
 import com.avst.zk.common.param.ControlInfoParam;
 import com.avst.zk.common.util.DateUtil;
 import com.avst.zk.common.util.LogUtil;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ControlInfoService extends BaseAction {
@@ -36,7 +39,16 @@ public class ControlInfoService extends BaseAction {
             controlInfoParamVO.setServertitle("总控系统");
             controlInfoParamVO.setStatus(1);
             controlInfoParamVO.setCreatetime(DateUtil.getDateAndMinute());
-            controlInfoParamVO.setUrl(myIP + ":8079/main/gotomain");
+            AppCacheParam cacheParam = AppCache.getAppCacheParam();
+            String baseurl=":8079/main/gotomain";//默认的
+            if(null!=cacheParam){//调用配置文件的地址进行组合
+                try {
+                    baseurl= ((Map<String,Object>)cacheParam.getData().get("guidepage")).get("url").toString();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            controlInfoParamVO.setUrl(myIP +baseurl);
 
             arrayList.add(controlInfoParamVO);
         }

@@ -1026,7 +1026,7 @@ public static String numtoStr(int digit,Integer num){
 				}
 			}
 
-			LogUtil.intoLog(OpenUtil.class,filePath);
+			LogUtil.intoLog(OpenUtil.class,filePath+":avst 外部配置文件读取");
 			return filePath;
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -75,42 +75,6 @@ public class MainService {
     public void getNavList(RResult result) {
 
         AppCacheParam cacheParam = AppCache.getAppCacheParam();
-        if(null == cacheParam.getData()){
-            String path = OpenUtil.getXMSoursePath() + "\\" + nav_file_name + ".yml";
-            FileInputStream fis = null;
-            try {
-                fis = new FileInputStream(path);
-
-                Yaml yaml = new Yaml();
-                Map<String,Object> map = yaml.load(fis);
-                Map<String,Object> avstYml = (Map<String, Object>) map.get(application_name);
-                avstYml.put("bottom", map.get("bottom"));
-                if (null != map && map.size() > 0) {
-                    cacheParam.setTitle((String) avstYml.get("title"));
-                }
-
-                //拼接引导页url
-                String myIP = NetTool.getMyIP();
-                Map<String, Object> guidepaMap = (Map<String, Object>) avstYml.get("guidepage");
-                Map<String, Object> client_buttonMap = (Map<String, Object>) guidepaMap.get("client_button");
-                String url = (String) client_buttonMap.get("url");
-                url = "http://" + myIP + url;
-                avstYml.put("guidepageUrl", url);
-
-                cacheParam.setData(avstYml);
-
-            } catch (IOException e) {
-                LogUtil.intoLog(4, this.getClass(), "没找到外部配置文件：" + path);
-            }finally {
-                if(null != fis){
-                    try {
-                        fis.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
         result.setData(cacheParam);
         result.changeToTrue();
 
