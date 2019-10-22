@@ -82,6 +82,12 @@
             }
         };
 
+        var client = GetQueryString("client");
+        if(isNotEmpty(client)){
+            getClientUrl(client);
+            $("#guidepage").attr("href", client);//设置返回客户端地址 guidepage
+        }
+
         layui.use('form', function(){
             var form = layui.form;
             form.render();

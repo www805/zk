@@ -6,11 +6,15 @@ import com.avst.zk.common.util.LogUtil;
 import com.avst.zk.common.util.NetTool;
 import com.avst.zk.common.util.OpenUtil;
 import com.avst.zk.common.util.properties.PropertiesListenerConfig;
+import com.avst.zk.common.vo.ControlInfoParamVO;
+import com.avst.zk.outside.interfacetoout.cache.ControlCache;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 public class AppCache {
@@ -58,7 +62,26 @@ public class AppCache {
             Map<String, Object> guidepaMap = (Map<String, Object>) avstYml.get("guidepage");
             Map<String, Object> client_buttonMap = (Map<String, Object>) guidepaMap.get("client_button");
             String url = (String) client_buttonMap.get("url");
-            url = "http://" + myIP + url;
+
+            String trmUrl = "";
+
+            //获取客户端地址
+            List<ControlInfoParamVO> list = ControlCache.getControlInfoList("list");
+            if (null != list && list.size() > 0) {
+                for (ControlInfoParamVO paramVO : list) {
+                    if (paramVO.getServername().indexOf("trm") != -1) {
+                        trmUrl = paramVO.getUrl();
+                        break;
+                    }
+                }
+            }
+
+            if (StringUtils.isNotBlank(trmUrl)) {
+                url = trmUrl;
+            }else{
+                url = "http://" + myIP + url;
+            }
+
             avstYml.put("guidepageUrl", url);
 
             appCacheParam.setData(avstYml);

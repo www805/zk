@@ -10,6 +10,7 @@ import com.avst.zk.common.util.LogUtil;
 import com.avst.zk.common.util.NetTool;
 import com.avst.zk.common.util.baseaction.BaseAction;
 import com.avst.zk.common.util.baseaction.RResult;
+import com.avst.zk.web.req.GetClientUrlParam;
 import com.avst.zk.web.req.LoginParam;
 import com.avst.zk.web.service.MainService;
 import com.avst.zk.web.vo.GoguidepageVO;
@@ -102,6 +103,20 @@ public class MainAction extends BaseAction {
 //        Subject subject = SecurityUtils.getSubject();
 //        subject.logout();
         return rResult;
+    }
+
+    /**
+     * 提交客户端地址
+     * @param param
+     * @return
+     */
+    @RequestMapping("/getClientUrl")
+    @ResponseBody
+    public  RResult getClientUrl(GetClientUrlParam param){
+        RResult result=this.createNewResultOfFail();
+        mainService.getClientUrl(result, param);
+        result.setEndtime(DateUtil.getDateAndMinute());
+        return result;
     }
 
     /**

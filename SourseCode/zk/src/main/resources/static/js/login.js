@@ -34,6 +34,17 @@ function login_logout(){
     ajaxSubmit(url,null,callLogout);
 }
 
+function getClientUrl(clientUrl){
+
+    var url=getUrl_manage().getClientUrl;
+
+    var data={
+        clientUrl:clientUrl,
+    };
+    ajaxSubmit(url,data,callgetClientUrl);
+
+}
+
 function getNavList() {
     var url=getUrl_manage().getNavList;
     ajaxSubmitByJson(url,null,callgetNavList);
@@ -52,10 +63,10 @@ function callgetNavList(data) {
                 $("#spanTitle").html(Top_Title);
             }
 
-            if (isNotEmpty(appCache.data.guidepageUrl)) {
-                //设置引导页地址 guidepage
-                $("#guidepage").attr("href", appCache.data.guidepageUrl);
-            }
+            // if (isNotEmpty(appCache.data.guidepageUrl)) {
+            //     //设置引导页地址 guidepage
+            //     $("#guidepage").attr("href", appCache.data.guidepageUrl);
+            // }
 
             if (isNotEmpty(appCache.data.bottom)) {
                 if (!isNotEmpty(appCache.data.bottom) || !isNotEmpty(appCache.data.bottom.name) || !isNotEmpty(appCache.data.bottom.declaration)) {
@@ -106,3 +117,23 @@ function callLogout(data){
 }
 
 
+
+function callgetClientUrl(data){
+
+    if(null!=data&&data.actioncode=='SUCCESS'){
+        console.log("提交客户端地址成功");
+    }else{
+        layer.msg(data.message, {icon: 2});
+    }
+    layui.use('form', function(){
+        var form = layui.form;
+        form.render();
+    });
+}
+
+
+function GetQueryString(name) {
+    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);//search,查询？后面的参数，并匹配正则
+    if(r!=null)return  unescape(r[2]); return null;
+}

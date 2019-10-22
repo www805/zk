@@ -13,6 +13,7 @@ import com.avst.zk.common.util.baseaction.ReqParam;
 import com.avst.zk.feignclient.trm.TrmControl;
 import com.avst.zk.feignclient.trm.req.UserloginParam;
 import com.avst.zk.outside.interfacetoout.v1.service.ControlInfoService;
+import com.avst.zk.web.req.GetClientUrlParam;
 import com.avst.zk.web.req.LoginParam;
 import com.avst.zk.web.vo.GoguidepageVO;
 import org.apache.commons.lang.StringUtils;
@@ -133,5 +134,15 @@ public class MainService {
         goguidepageVO.setZk_button_url(zk_button_url);
 
         return goguidepageVO;
+    }
+
+    public void getClientUrl(RResult result, GetClientUrlParam param) {
+
+        AppCacheParam cacheParam = AppCache.getAppCacheParam();
+        Map<String, Object> data = cacheParam.getData();
+        data.put("guidepageUrl", param.getClientUrl());
+
+        result.changeToTrue();
+
     }
 }
