@@ -166,5 +166,11 @@ function callServerCheck(data){
 
 }
 
-
+function zkload() {
+    layer.msg("加载中，请稍后...", {
+        icon: 16,
+        time:15000,
+        shade: [0.1,"#fff"],
+    });
+}
 
