@@ -88,6 +88,14 @@
             $("#guidepage").attr("href", client);//设置返回客户端地址 guidepage
         }
 
+        $("#guidepage").click(function () {
+            layer.msg("加载中，请稍后...", {
+                icon: 16,
+                time:10000,
+                shade: [0.1,"#fff"],
+            });
+        });
+
         layui.use('form', function(){
             var form = layui.form;
             form.render();
