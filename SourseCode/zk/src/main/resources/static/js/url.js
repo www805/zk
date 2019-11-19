@@ -39,7 +39,9 @@ function getUrl_manage() {
 
 		getServerStatus:getPath()+basepath+"main/getServerStatus",
 
-		getClientUrl:getPath()+basepath+"main/getClientUrl"
+		getClientUrl:getPath()+basepath+"main/getClientUrl",
+
+        getLoginCookie:getPath()+basepath+"main/getLoginCookie"
 	};
 }
 

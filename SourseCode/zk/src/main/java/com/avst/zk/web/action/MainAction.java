@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 @Controller
@@ -84,9 +85,9 @@ public class MainAction extends BaseAction {
 
     @PostMapping(value = "/logining")
     @ResponseBody
-    public RResult checklogin(Model model, HttpServletRequest request, LoginParam loginParam) {
+    public RResult checklogin(Model model, HttpServletRequest request, HttpServletResponse response, LoginParam loginParam) {
         RResult result=createNewResultOfFail();
-        mainService.logining(result,request,loginParam);
+        mainService.logining(result,request,response,loginParam);
         result.setEndtime(DateUtil.getDateAndMinute());
         return result;
     }
@@ -156,5 +157,19 @@ public class MainAction extends BaseAction {
         model.addAttribute("zk_button_url",goguidepageVO.getZk_button_url());
         return  new ModelAndView("sweb/guidepage","goguidepageModel", model);
     }
+
+    @RequestMapping("/getLoginCookie")
+    @ResponseBody
+    public  RResult getLoginCookie(HttpServletRequest request) {
+        RResult result = this.createNewResultOfFail();
+        try {
+            mainService.getLoginCookie(result,request);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        result.setEndtime(DateUtil.getDateAndMinute());
+        return result;
+    }
+
 
 }

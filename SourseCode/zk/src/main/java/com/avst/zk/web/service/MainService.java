@@ -15,6 +15,7 @@ import com.avst.zk.feignclient.trm.req.UserloginParam;
 import com.avst.zk.outside.interfacetoout.v1.service.ControlInfoService;
 import com.avst.zk.web.req.GetClientUrlParam;
 import com.avst.zk.web.req.LoginParam;
+import com.avst.zk.web.vo.GetLoginCookieVO;
 import com.avst.zk.web.vo.GoguidepageVO;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.yaml.snakeyaml.Yaml;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Map;
@@ -41,7 +44,7 @@ public class MainService {
     @Value("${nav.file.name}")
     private String nav_file_name;
 
-    public RResult logining(RResult result, HttpServletRequest request, LoginParam loginParam){
+    public RResult logining(RResult result, HttpServletRequest request, HttpServletResponse response, LoginParam loginParam){
 
         AppCacheParam cacheParam = AppCache.getAppCacheParam();
         if (StringUtils.isBlank(cacheParam.getTitle()) || null == cacheParam.getData()) {
@@ -63,6 +66,27 @@ public class MainService {
         if(!loginParam.getPassword().equals(password)){
             result.setMessage("用户名或密码错误");
             return result;
+        }
+
+        boolean rememberpassword=loginParam.isRememberpassword();
+        if (rememberpassword){
+            Cookie zkloginaccount=new Cookie("ZKLOGINACCOUNT",loginaccount);
+            zkloginaccount.setMaxAge(60*60*24*7);
+            zkloginaccount.setPath("/");
+            Cookie zkrememberme=new Cookie("ZKREMEMBERME","YES");
+            zkrememberme.setMaxAge(60*60*24*7);
+            zkrememberme.setPath("/");
+            response.addCookie(zkloginaccount);
+            response.addCookie(zkrememberme);
+        }else {
+            Cookie zkloginaccount=new Cookie("ZKLOGINACCOUNT",null);
+            zkloginaccount.setMaxAge(0);
+            zkloginaccount.setPath("/");
+            Cookie zkrememberme=new Cookie("ZKREMEMBERME",null);
+            zkrememberme.setMaxAge(0);
+            zkrememberme.setPath("/");
+            response.addCookie(zkrememberme);
+            response.addCookie(zkrememberme);
         }
 
         result.changeToTrue();
@@ -144,5 +168,42 @@ public class MainService {
 
         result.changeToTrue();
 
+    }
+
+    public void getLoginCookie(RResult result,HttpServletRequest request){
+        GetLoginCookieVO vo=new GetLoginCookieVO();
+        String loginaccount = "";
+        String password = "";
+
+        //获取当前站点的所有Cookie
+        String rememberme=null;
+        Cookie[] cookies = request.getCookies();
+        if (null != cookies && cookies.length > 0) {
+            for (int i = 0; i < cookies.length; i++) {//对cookies中的数据进行遍历，找到用户名、密码的数据
+                if ("ZKLOGINACCOUNT".equals(cookies[i].getName())) {
+                    loginaccount = cookies[i].getValue();
+                } else if ("ZKREMEMBERME".equals(cookies[i].getName())) {
+                    rememberme = cookies[i].getValue();
+                }
+            }
+        }
+
+        if (StringUtils.isNotEmpty(rememberme)&&rememberme.equals("YES")&&StringUtils.isNotEmpty(loginaccount)){
+            AppCacheParam cacheParam = AppCache.getAppCacheParam();
+            if (StringUtils.isBlank(cacheParam.getTitle()) || null == cacheParam.getData()) {
+                RResult rr = new RResult();
+                this.getNavList(rr);
+            }
+
+            Map<String, Object> loginData = cacheParam.getData();
+            password = (String) loginData.get("password");
+        }
+
+
+        vo.setLoginaccount(loginaccount);
+        vo.setPassword(password);
+        result.setData(vo);
+        result.changeToTrue();
+        return;
     }
 }

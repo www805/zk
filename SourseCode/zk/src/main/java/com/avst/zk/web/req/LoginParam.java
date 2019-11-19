@@ -17,6 +17,16 @@ public class LoginParam {
      */
     private String username="测试用户";
 
+    private boolean rememberpassword;//记住密码
+
+    public boolean isRememberpassword() {
+        return rememberpassword;
+    }
+
+    public void setRememberpassword(boolean rememberpassword) {
+        this.rememberpassword = rememberpassword;
+    }
+
     public String getUsername() {
         return username;
     }
