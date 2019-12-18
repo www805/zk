@@ -84,6 +84,8 @@ public class ControlCache {
                         ci.setUse_item(ciparam.getUse_item());
                         ci.setTotal_item(ciparam.getTotal_item());
                         ci.setStatus(ciparam.getStatus());
+                        ci.setUrl(ciparam.getUrl());
+                        ci.setUrltwo(ciparam.getUrltwo());
                         ci.setLasttime(DateUtil.getDateAndMinute());//设置最后连接时间
 //                        ci.setCreatetime(ciparam.getCreatetime());
                         ci.setServername(ciparam.getServername());

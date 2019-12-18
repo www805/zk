@@ -83,6 +83,8 @@ function callControl(data){
 
     if(null!=data&&data.actioncode=='SUCCESS'){
 
+        var onetrmip = false;
+
         if(isNotEmpty(data.data)){
             var list = data.data;
             var ControlInfoParamVO = null;
@@ -109,6 +111,11 @@ function callControl(data){
 
                 if (servername == "zk") {
                     continue;
+                }
+
+                if (servername == "trm" && onetrmip == false) {
+                    onetrmip = true;
+                    $("#guidepage").attr("href", ControlInfoParamVO.url);
                 }
 
                 //配置到列表里面
