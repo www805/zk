@@ -43,12 +43,9 @@ public class ZkApplication  {
 
         SpringApplication application=new SpringApplication(ZkApplication.class);
         application.setBeanNameGenerator(new CustomGenerator());
-        application.addListeners(new PropertiesListener("application.properties"));
+        application.addListeners(new PropertiesListener("application.properties","zk.properties"));
         application.run(args);
 
-//        new SpringApplicationBuilder(ZkApplication.class)
-//                .beanNameGenerator(new CustomGenerator())
-//                .run(args);
     }
 
 }
