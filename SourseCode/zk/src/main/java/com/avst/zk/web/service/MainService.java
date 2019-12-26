@@ -10,6 +10,7 @@ import com.avst.zk.common.util.NetTool;
 import com.avst.zk.common.util.OpenUtil;
 import com.avst.zk.common.util.baseaction.RResult;
 import com.avst.zk.common.util.baseaction.ReqParam;
+import com.avst.zk.common.util.properties.PropertiesListenerConfig;
 import com.avst.zk.feignclient.trm.TrmControl;
 import com.avst.zk.feignclient.trm.req.UserloginParam;
 import com.avst.zk.outside.interfacetoout.v1.service.ControlInfoService;
@@ -141,10 +142,14 @@ public class MainService {
                 hostAddress = "localhost";
             }
 
+            String port= PropertiesListenerConfig.getProperty("spring.port");
+            if(StringUtils.isBlank(port)){
+                port = "6059";
+            }
             if(StringUtils.isBlank(zk_button_url)){
-                zk_button_url = "http://" + hostAddress + ":8079/main/gotologin/";
+                zk_button_url = "http://" + hostAddress + ":" + port + "/main/gotologin/";
             }else{
-                zk_button_url = "http://" + hostAddress + ":8079" + zk_button_url;
+                zk_button_url = "http://" + hostAddress + ":" + port + zk_button_url;
             }
         }else{
             LogUtil.intoLog(4, this.getClass(), "外部配置文件读取出错！！！！" );

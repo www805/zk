@@ -9,9 +9,11 @@ import com.avst.zk.common.util.NetTool;
 import com.avst.zk.common.util.baseaction.BaseAction;
 import com.avst.zk.common.util.baseaction.RResult;
 import com.avst.zk.common.util.baseaction.ReqParam;
+import com.avst.zk.common.util.properties.PropertiesListenerConfig;
 import com.avst.zk.common.vo.ControlInfoParamVO;
 import com.avst.zk.outside.interfacetoout.cache.ControlCache;
 import com.avst.zk.outside.interfacetoout.v1.req.HeartbeatParam;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -34,16 +36,17 @@ public class ControlInfoService extends BaseAction {
 
             String myIP = NetTool.getMyIP();
 
-            ControlInfoParamVO controlInfoParamVO = new ControlInfoParamVO();
+            ControlInfoParamVO controlInfoParamVO = new ControlInfoParamVO();//server.port
             controlInfoParamVO.setServername("zk");
             controlInfoParamVO.setServertitle("总控系统");
             controlInfoParamVO.setStatus(1);
             controlInfoParamVO.setCreatetime(DateUtil.getDateAndMinute());
             AppCacheParam cacheParam = AppCache.getAppCacheParam();
-            String baseurl=":8079/main/gotomain";//默认的
+            String port= PropertiesListenerConfig.getProperty("server.port");
+            String baseurl = ":" + port + "/main/gotomain";//默认的
             if(null!=cacheParam){//调用配置文件的地址进行组合
                 try {
-                    baseurl= ((Map<String,Object>)cacheParam.getData().get("guidepage")).get("url").toString();
+                    baseurl= ":" + port + ((Map<String,Object>)cacheParam.getData().get("guidepage")).get("url").toString();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

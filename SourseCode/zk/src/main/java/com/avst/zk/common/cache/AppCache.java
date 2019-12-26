@@ -57,6 +57,11 @@ public class AppCache {
                 appCacheParam.setTitle((String) avstYml.get("title"));
             }
 
+            String port=PropertiesListenerConfig.getProperty("server.port");
+            String homeUrlmap = (String) avstYml.get("home-url");
+            homeUrlmap = ":" + port + homeUrlmap;
+            avstYml.put("home-url", homeUrlmap);
+
             //拼接引导页url
             String myIP = NetTool.getMyIP();
             Map<String, Object> guidepaMap = (Map<String, Object>) avstYml.get("guidepage");
@@ -79,9 +84,8 @@ public class AppCache {
             if (StringUtils.isNotBlank(trmUrl)) {
                 url = trmUrl;
             }else{
-                url = "http://" + myIP + url;
+                url = "http://" + myIP + ":" + port + url;
             }
-
             avstYml.put("guidepageUrl", url);
 
             appCacheParam.setData(avstYml);
