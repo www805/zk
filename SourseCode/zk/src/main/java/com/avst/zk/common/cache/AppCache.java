@@ -90,8 +90,9 @@ public class AppCache {
 
             appCacheParam.setData(avstYml);
 
-        } catch (IOException e) {
-            LogUtil.intoLog(4, AppCache.class, "没找到外部配置文件：" + path);
+        } catch (Exception e) {
+            LogUtil.intoLog(4, AppCache.class, e.getMessage()+"读取外部配置文件异常：" + path);
+            e.printStackTrace();
         }finally {
             if(null != fis){
                 try {
