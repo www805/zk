@@ -38,6 +38,9 @@ public class MainAction extends BaseAction {
     }
 
     /**
+     *
+     *
+     *
      * 进入用户登录页面
      * @param model
      * @param request
