@@ -4,12 +4,11 @@
     <contextName>zk-log</contextName>
 
     <!--  info 地址 -->
-    <property name="log.path" value="D:\\log\\zk\\" />
-    <property name="log.file" value="D:\\log\\zk\\zk.log" />
+    <property name="log.zkpath" value="${log.path}zk/" />
+    <property name="log.file" value="${log.zkpath}zk.log" />
 
     <!-- errr,错误路径 -->
-    <property name="log.path.error" value="D:\\log\\zk\\" />
-    <property name="log.file.error" value="D:\\log\\zk\\zk-error.log" />
+    <property name="log.file.error" value="${log.zkpath}zk-error.log" />
 
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
@@ -19,7 +18,7 @@
         <!-- 循环政策：基于时间创建日志文件 -->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 日志命名:单个文件大于10MB 按照时间+自增i 生成log文件 -->
-            <fileNamePattern>${log.path}mc-log-info-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>${log.zkpath}zk-log-info-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>10MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
@@ -45,7 +44,7 @@
         <!-- 循环政策：基于时间创建日志文件 -->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 日志命名:单个文件大于10MB 按照时间+自增i 生成log文件 -->
-            <fileNamePattern>${log.path.error}mc-log-error-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>${log.zkpath}zk-log-error-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>10MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>

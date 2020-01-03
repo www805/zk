@@ -12,6 +12,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.yaml.snakeyaml.Yaml;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
@@ -44,7 +45,7 @@ public class AppCache {
 
     private static synchronized void initAppCacheParam(){
 
-        String path = OpenUtil.getXMSoursePath() + "\\" + nav_file_name + ".yml";
+        String path = OpenUtil.getXMSoursePath() + File.separator + nav_file_name + ".yml";
         FileInputStream fis = null;
         try {
             fis = new FileInputStream(path);
