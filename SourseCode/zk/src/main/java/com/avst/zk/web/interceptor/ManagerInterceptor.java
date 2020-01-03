@@ -49,14 +49,14 @@ public class ManagerInterceptor extends HandlerInterceptorAdapter {
         if (disbool) {
             return true;  //通过拦截器，继续执行请求
         } else {//跳转登录界面
-            RResult rresult = new RResult();
-            LoginParam loginParam = new LoginParam();
-            MainService mainService = SpringUtil.getBean(MainService.class);
-            rresult = mainService.logining(rresult, request, response, loginParam);
-            //登录成功就返回true
-            if ("SUCCESS".equalsIgnoreCase(rresult.getActioncode())) {
-                return true;
-            }
+//            RResult rresult = new RResult();
+//            LoginParam loginParam = new LoginParam();
+//            MainService mainService = SpringUtil.getBean(MainService.class);
+//            rresult = mainService.logining(rresult, request, response, loginParam);
+//            //登录成功就返回true
+//            if ("SUCCESS".equalsIgnoreCase(rresult.getActioncode())) {
+//                return true;
+//            }
             request.getRequestDispatcher(forstpageid).forward(request, response);
             return false;  //没有通过拦截器，返回登录页面
         }

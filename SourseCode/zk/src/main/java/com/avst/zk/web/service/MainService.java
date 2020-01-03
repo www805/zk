@@ -53,50 +53,59 @@ public class MainService {
 
     public RResult logining(RResult result, HttpServletRequest request, HttpServletResponse response, LoginParam loginParam){
 
+
+        if(StringUtils.isBlank(loginParam.getLoginaccount()) || StringUtils.isBlank(loginParam.getPassword())){
+            result.setMessage("账号或密码不能为空");
+            return result;
+        }
+
+
         String loginaccount = "";
         //獲取trm帳號密碼信息
-        LogUtil.intoLog(1, this.getClass(), "远程请求trm看是否已经登陆成功，如果成功就不走zk登录");
-
-        ReqParam reqParam = new ReqParam();
-        RResult userPwdResult = null;
-        try {
-            userPwdResult = trmControl.getUserPwd(reqParam);
-        } catch (Exception e) {
-            e.printStackTrace();
-            LogUtil.intoLog(4, this.getClass(), "远程请求trm获取账号密码失败。。。");
+//        LogUtil.intoLog(1, this.getClass(), "远程请求trm看是否已经登陆成功，如果成功就不走zk登录");
+//
+//        LogUtil.intoLog(3, this.getClass(), "获取trm账号密码失败，执行zk登录形式");
+        AppCacheParam cacheParam = AppCache.getAppCacheParam();
+        if (StringUtils.isBlank(cacheParam.getTitle()) || null == cacheParam.getData()) {
+            RResult rr = new RResult();
+            this.getNavList(rr);
         }
 
-        if(null == userPwdResult || "FAIL".equalsIgnoreCase(userPwdResult.getActioncode())){
-            LogUtil.intoLog(3, this.getClass(), "获取trm账号密码失败，执行zk登录形式");
-            AppCacheParam cacheParam = AppCache.getAppCacheParam();
-            if (StringUtils.isBlank(cacheParam.getTitle()) || null == cacheParam.getData()) {
-                RResult rr = new RResult();
-                this.getNavList(rr);
-            }
+        /**取出账号密码**/
+        Map<String, Object> loginData = cacheParam.getData();
 
-            /**取出账号密码**/
-            Map<String, Object> loginData = cacheParam.getData();
+        loginaccount = (String) loginData.get("loginaccount");
+        String password = (String) loginData.get("password");
 
-            loginaccount = (String) loginData.get("loginaccount");
-            String password = (String) loginData.get("password");
-
-            if(!loginParam.getLoginaccount().equals(loginaccount)){
-                result.setMessage("用户不存在");
-                return result;
-            }
-
-            if(!loginParam.getPassword().equals(password)){
-                result.setMessage("用户名或密码错误");
-                return result;
-            }
-        }else{
-            ControlInfoParamVO vo = gson.fromJson(gson.toJson(userPwdResult.getData()), ControlInfoParamVO.class);
-
-            loginaccount = vo.getLoginusername();
-            loginParam.setLoginaccount(loginaccount);
-            loginParam.setPassword(vo.getLoginpassword());
-            LogUtil.intoLog(1, this.getClass(), "获取trm账号密码成功！账号：" + loginParam.getLoginaccount() + " 密码：" + loginParam.getPassword());
+        if(!loginParam.getLoginaccount().equals(loginaccount)){
+            result.setMessage("用户不存在");
+            return result;
         }
+
+        if(!loginParam.getPassword().equals(password)){
+            result.setMessage("用户名或密码错误");
+            return result;
+        }
+
+//        ReqParam reqParam = new ReqParam();
+//        RResult userPwdResult = null;
+//        try {
+//            userPwdResult = trmControl.getUserPwd(reqParam);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            LogUtil.intoLog(4, this.getClass(), "远程请求trm获取账号密码失败。。。");
+//        }
+//
+//        if(null == userPwdResult || "FAIL".equalsIgnoreCase(userPwdResult.getActioncode())){
+//
+//        }else{
+//            ControlInfoParamVO vo = gson.fromJson(gson.toJson(userPwdResult.getData()), ControlInfoParamVO.class);
+//
+//            loginaccount = vo.getLoginusername();
+//            loginParam.setLoginaccount(loginaccount);
+//            loginParam.setPassword(vo.getLoginpassword());
+//            LogUtil.intoLog(1, this.getClass(), "获取trm账号密码成功！账号：" + loginParam.getLoginaccount() + " 密码：" + loginParam.getPassword());
+//        }
 
         boolean rememberpassword=loginParam.isRememberpassword();
         if (rememberpassword){
