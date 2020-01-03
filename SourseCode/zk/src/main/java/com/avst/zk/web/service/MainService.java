@@ -11,13 +11,16 @@ import com.avst.zk.common.util.OpenUtil;
 import com.avst.zk.common.util.baseaction.RResult;
 import com.avst.zk.common.util.baseaction.ReqParam;
 import com.avst.zk.common.util.properties.PropertiesListenerConfig;
+import com.avst.zk.common.vo.ControlInfoParamVO;
 import com.avst.zk.feignclient.trm.TrmControl;
 import com.avst.zk.feignclient.trm.req.UserloginParam;
+import com.avst.zk.outside.interfacetoout.cache.ControlCache;
 import com.avst.zk.outside.interfacetoout.v1.service.ControlInfoService;
 import com.avst.zk.web.req.GetClientUrlParam;
 import com.avst.zk.web.req.LoginParam;
 import com.avst.zk.web.vo.GetLoginCookieVO;
 import com.avst.zk.web.vo.GoguidepageVO;
+import com.google.gson.Gson;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,10 +32,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 @Service
 public class MainService {
+
+    private Gson gson = new Gson();
 
     @Autowired
     private TrmControl trmControl;
@@ -47,26 +53,49 @@ public class MainService {
 
     public RResult logining(RResult result, HttpServletRequest request, HttpServletResponse response, LoginParam loginParam){
 
-        AppCacheParam cacheParam = AppCache.getAppCacheParam();
-        if (StringUtils.isBlank(cacheParam.getTitle()) || null == cacheParam.getData()) {
-            RResult rr = new RResult();
-            this.getNavList(rr);
+        String loginaccount = "";
+        //獲取trm帳號密碼信息
+        LogUtil.intoLog(1, this.getClass(), "远程请求trm看是否已经登陆成功，如果成功就不走zk登录");
+
+        ReqParam reqParam = new ReqParam();
+        RResult userPwdResult = null;
+        try {
+            userPwdResult = trmControl.getUserPwd(reqParam);
+        } catch (Exception e) {
+            e.printStackTrace();
+            LogUtil.intoLog(4, this.getClass(), "远程请求trm获取账号密码失败。。。");
         }
 
-        /**取出账号密码**/
-        Map<String, Object> loginData = cacheParam.getData();
+        if(null == userPwdResult || "FAIL".equalsIgnoreCase(userPwdResult.getActioncode())){
+            LogUtil.intoLog(3, this.getClass(), "获取trm账号密码失败，执行zk登录形式");
+            AppCacheParam cacheParam = AppCache.getAppCacheParam();
+            if (StringUtils.isBlank(cacheParam.getTitle()) || null == cacheParam.getData()) {
+                RResult rr = new RResult();
+                this.getNavList(rr);
+            }
 
-        String loginaccount = (String) loginData.get("loginaccount");
-        String password = (String) loginData.get("password");
+            /**取出账号密码**/
+            Map<String, Object> loginData = cacheParam.getData();
 
-        if(!loginParam.getLoginaccount().equals(loginaccount)){
-            result.setMessage("用户不存在");
-            return result;
-        }
+            loginaccount = (String) loginData.get("loginaccount");
+            String password = (String) loginData.get("password");
 
-        if(!loginParam.getPassword().equals(password)){
-            result.setMessage("用户名或密码错误");
-            return result;
+            if(!loginParam.getLoginaccount().equals(loginaccount)){
+                result.setMessage("用户不存在");
+                return result;
+            }
+
+            if(!loginParam.getPassword().equals(password)){
+                result.setMessage("用户名或密码错误");
+                return result;
+            }
+        }else{
+            ControlInfoParamVO vo = gson.fromJson(gson.toJson(userPwdResult.getData()), ControlInfoParamVO.class);
+
+            loginaccount = vo.getLoginusername();
+            loginParam.setLoginaccount(loginaccount);
+            loginParam.setPassword(vo.getLoginpassword());
+            LogUtil.intoLog(1, this.getClass(), "获取trm账号密码成功！账号：" + loginParam.getLoginaccount() + " 密码：" + loginParam.getPassword());
         }
 
         boolean rememberpassword=loginParam.isRememberpassword();
