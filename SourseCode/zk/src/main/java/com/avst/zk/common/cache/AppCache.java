@@ -84,7 +84,8 @@ public class AppCache {
             if (StringUtils.isNotBlank(trmUrl)) {
                 url = trmUrl;
             }else{
-                url = "http://" + myIP + ":" + port + url;
+//                url = "http://" + myIP + ":" + port + url;//这里是获取avst里的返回客户端路径，但是没有trm端口暂时屏蔽
+                url = "trm尚未提交信息到总控，暂无法通过url返回客户端";
             }
             avstYml.put("guidepageUrl", url);
 

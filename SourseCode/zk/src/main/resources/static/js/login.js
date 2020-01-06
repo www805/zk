@@ -65,10 +65,11 @@ function callgetNavList(data) {
                 $("#spanTitle").html(Top_Title);
             }
 
-            // if (isNotEmpty(appCache.data.guidepageUrl)) {
-            //     //设置引导页地址 guidepage
-            //     $("#guidepage").attr("href", appCache.data.guidepageUrl);
-            // }
+
+            if ($("#guidepage").attr("href") == "#" && isNotEmpty(appCache.data.guidepageUrl)) {
+                //设置引导页地址 guidepage
+                $("#guidepage").attr("href", appCache.data.guidepageUrl);
+            }
 
             if (isNotEmpty(appCache.data.bottom)) {
                 if (!isNotEmpty(appCache.data.bottom) || !isNotEmpty(appCache.data.bottom.name) || !isNotEmpty(appCache.data.bottom.declaration)) {
