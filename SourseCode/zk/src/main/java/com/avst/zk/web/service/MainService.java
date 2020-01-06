@@ -6,10 +6,8 @@ import com.avst.zk.common.cache.param.AppCacheParam;
 import com.avst.zk.common.conf.Constant;
 import com.avst.zk.common.conf.UserCache;
 import com.avst.zk.common.util.LogUtil;
-import com.avst.zk.common.util.NetTool;
-import com.avst.zk.common.util.OpenUtil;
 import com.avst.zk.common.util.baseaction.RResult;
-import com.avst.zk.common.util.baseaction.ReqParam;
+import com.avst.zk.common.util.iputil.SystemIpUtil;
 import com.avst.zk.common.util.properties.PropertiesListenerConfig;
 import com.avst.zk.common.vo.ControlInfoParamVO;
 import com.avst.zk.feignclient.trm.TrmControl;
@@ -25,7 +23,6 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.yaml.snakeyaml.Yaml;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -175,10 +172,7 @@ public class MainService {
             zk_button_url = (String) zk_button.get("url");
 
             //获取本机ip地址
-            String hostAddress = NetTool.getMyIP();
-            if(StringUtils.isBlank(hostAddress)){
-                hostAddress = "localhost";
-            }
+            String hostAddress = SystemIpUtil.getOneUseableIp();
 
             String port= PropertiesListenerConfig.getProperty("spring.port");
             if(StringUtils.isBlank(port)){

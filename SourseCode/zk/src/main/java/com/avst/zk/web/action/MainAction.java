@@ -2,19 +2,14 @@ package com.avst.zk.web.action;
 
 
 import com.avst.zk.common.cache.AppCache;
-import com.avst.zk.common.cache.param.AppCacheParam;
-import com.avst.zk.common.conf.Constant;
 import com.avst.zk.common.conf.UserCache;
 import com.avst.zk.common.util.DateUtil;
-import com.avst.zk.common.util.LogUtil;
-import com.avst.zk.common.util.NetTool;
 import com.avst.zk.common.util.baseaction.BaseAction;
 import com.avst.zk.common.util.baseaction.RResult;
 import com.avst.zk.web.req.GetClientUrlParam;
 import com.avst.zk.web.req.LoginParam;
 import com.avst.zk.web.service.MainService;
 import com.avst.zk.web.vo.GoguidepageVO;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/main")

@@ -1123,6 +1123,45 @@ public static String numtoStr(int digit,Integer num){
 		return false;
 	}
 
+	/**
+	 * 判断ip是否正确
+	 * @param ip
+	 * @return
+	 */
+	public static boolean isIp(String ip) {
+		boolean b1 = ip.matches("([1-9]|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])(\\.(\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])){3}");
+
+		if(!b1){
+			if(ip.equals("localhost")){
+				b1=true;
+			}
+		}
+		return b1;
+	}
+
+
+	public static String getOsName() {
+		String os = "";
+		os = System.getProperty("os.name");
+		return os;
+	}
+
+	/**
+	 * 1是win
+	 * 2是Linux
+	 * 3其他
+	 * @return
+	 */
+	public static int osType() {
+		String address = "";
+		String os = getOsName();
+		if (os.startsWith("Win")) {
+			return 1;
+		} else if (os.startsWith("Linux")) {
+			return 2;
+		}
+		return 2;
+	}
 
 
 	

@@ -2,22 +2,18 @@ package com.avst.zk.outside.interfacetoout.v1.service;
 
 import com.avst.zk.common.cache.AppCache;
 import com.avst.zk.common.cache.param.AppCacheParam;
-import com.avst.zk.common.param.ControlInfoParam;
 import com.avst.zk.common.util.DateUtil;
 import com.avst.zk.common.util.LogUtil;
-import com.avst.zk.common.util.NetTool;
 import com.avst.zk.common.util.baseaction.BaseAction;
 import com.avst.zk.common.util.baseaction.RResult;
 import com.avst.zk.common.util.baseaction.ReqParam;
+import com.avst.zk.common.util.iputil.SystemIpUtil;
 import com.avst.zk.common.util.properties.PropertiesListenerConfig;
 import com.avst.zk.common.vo.ControlInfoParamVO;
 import com.avst.zk.outside.interfacetoout.cache.ControlCache;
-import com.avst.zk.outside.interfacetoout.v1.req.HeartbeatParam;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +30,7 @@ public class ControlInfoService extends BaseAction {
                 arrayList.add(vo);
             }
 
-            String myIP = NetTool.getMyIP();
+            String myIP = SystemIpUtil.getOneUseableIp();
 
             ControlInfoParamVO controlInfoParamVO = new ControlInfoParamVO();//server.port
             controlInfoParamVO.setServername("zk");

@@ -3,13 +3,12 @@ package com.avst.zk.common.cache;
 
 import com.avst.zk.common.cache.param.AppCacheParam;
 import com.avst.zk.common.util.LogUtil;
-import com.avst.zk.common.util.NetTool;
 import com.avst.zk.common.util.OpenUtil;
+import com.avst.zk.common.util.iputil.SystemIpUtil;
 import com.avst.zk.common.util.properties.PropertiesListenerConfig;
 import com.avst.zk.common.vo.ControlInfoParamVO;
 import com.avst.zk.outside.interfacetoout.cache.ControlCache;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
@@ -64,7 +63,7 @@ public class AppCache {
             avstYml.put("home-url", homeUrlmap);
 
             //拼接引导页url
-            String myIP = NetTool.getMyIP();
+            String myIP = SystemIpUtil.getOneUseableIp();
             Map<String, Object> guidepaMap = (Map<String, Object>) avstYml.get("guidepage");
             Map<String, Object> client_buttonMap = (Map<String, Object>) guidepaMap.get("client_button");
             String url = (String) client_buttonMap.get("url");
